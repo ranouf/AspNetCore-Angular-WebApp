@@ -1,17 +1,18 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "test1"
+    "name": "test1",
+    "ejected": true
   },
   "apps": [
     {
-      "root": "src",
-      "outDir": "dist",
+      "root": "ClientApp",
+      "outDir": "wwwroot",
       "assets": [
         "assets",
         "favicon.ico"
       ],
-      "index": "index.html",
+      "index": "./../Views/Shared/_WebpackTemplate.cshtml",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
       "test": "test.ts",
@@ -36,11 +37,11 @@
   },
   "lint": [
     {
-      "project": "src/tsconfig.app.json",
+      "project": "ClientApp/tsconfig.app.json",
       "exclude": "**/node_modules/**"
     },
     {
-      "project": "src/tsconfig.spec.json",
+      "project": "ClientApp/tsconfig.spec.json",
       "exclude": "**/node_modules/**"
     },
     {
@@ -55,6 +56,7 @@
   },
   "defaults": {
     "styleExt": "css",
-    "component": {}
+    "component": {
+    }
   }
 }
