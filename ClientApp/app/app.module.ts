@@ -5,6 +5,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCheckboxModule, MdInputModule } from '@angular/material';
 
+import { CovalentLayoutModule, CovalentStepsModule, CovalentMessageModule, CovalentSearchModule } from '@covalent/core';
+
 @NgModule({
 	declarations: [
 		AppComponent
@@ -15,6 +17,12 @@ import { MdButtonModule, MdCheckboxModule, MdInputModule } from '@angular/materi
 		MdButtonModule,
 		MdCheckboxModule,
 		MdInputModule,
+
+		//Covalent
+		CovalentLayoutModule,
+		CovalentStepsModule,
+		CovalentMessageModule,
+		CovalentSearchModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent]

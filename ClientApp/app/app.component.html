@@ -10,6 +10,37 @@
     <input mdInput placeholder="Favorite food" value="Sushi">
   </md-form-field>
 </form>
+
+<p class="md-body-1">Standalone message:</p>
+<td-message label="Error!" sublabel="You did something wrong!" color="warn" icon="error"></td-message>
+<p class="md-body-1">Message in a card with action</p>
+<md-card>
+  <td-message label="Warning!" sublabel="Your probably shouldn't do that!" color="primary" icon="warning">
+    <button td-message-actions md-button>VIEW MORE</button>
+  </td-message>
+</md-card>
+<p class="md-body-1">Message in a card content:</p>
+<md-card>
+  <md-card-title>Card title</md-card-title>
+  <md-divider></md-divider>
+  <td-message label="Info" sublabel="Maybe you want to know this" color="accent" icon="info"></td-message>
+  <md-card-content>
+    content
+  </md-card-content>
+</md-card>
+<p class="md-body-1">Toggle visibility:</p>
+<td-message #messageDemo color="primary" class="pad-sm" label="Hide me!" sublabel="You can toggle my visibility & add a class!">
+  <button td-message-actions md-icon-button (click)="messageDemo.close()"><md-icon>cancel</md-icon></button>
+</td-message>
+<button md-button color="accent" (click)="messageDemo.toggle()">
+  Toggle Visibility
+</button>
+
+<td-search-input placeholder="Search here" [showUnderline]="true" [debounce]="500" (searchDebounce)="searchInputTerm = $event" (search)="searchInputTerm = $event" (clear)="searchInputTerm = ''">
+</td-search-input>
+
+
+
 <h2>Here are some links to help you start: </h2>
 <ul>
   <li>
