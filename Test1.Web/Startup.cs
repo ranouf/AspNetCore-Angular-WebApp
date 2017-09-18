@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using Test1.Core;
+using Test1.Infrastructure;
 
 public class Startup
 {
@@ -35,13 +36,12 @@ public class Startup
     // Add framework services.
     services.AddMvc();
 
-    #region Autofac
+    // Autofac
     var builder = new ContainerBuilder();
     builder.RegisterModule(new CoreModule());
-
+    builder.RegisterModule(new InfrastructureModule());
     builder.Populate(services);
     ApplicationContainer = builder.Build();
-    #endregion
 
     return new AutofacServiceProvider(this.ApplicationContainer);
   }
