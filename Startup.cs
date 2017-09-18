@@ -1,9 +1,13 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
+using Test1.Core;
 
 public class Startup
 {
@@ -23,11 +27,23 @@ public class Startup
 
   public IConfigurationRoot Configuration { get; }
 
+  public IContainer ApplicationContainer { get; private set; }
+
   // This method gets called by the runtime. Use this method to add services to the container.
-  public void ConfigureServices(IServiceCollection services)
+  public IServiceProvider ConfigureServices(IServiceCollection services)
   {
     // Add framework services.
     services.AddMvc();
+
+    #region Autofac
+    var builder = new ContainerBuilder();
+    builder.RegisterModule(new CoreModule());
+
+    builder.Populate(services);
+    ApplicationContainer = builder.Build();
+    #endregion
+
+    return new AutofacServiceProvider(this.ApplicationContainer);
   }
 
   // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

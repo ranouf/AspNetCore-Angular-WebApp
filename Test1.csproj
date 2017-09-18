@@ -9,11 +9,16 @@
 		<Folder Include="wwwroot\" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="Autofac" Version="4.6.1" />
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Test1.Core\Test1.Core.csproj" />
 	</ItemGroup>
 </Project>
