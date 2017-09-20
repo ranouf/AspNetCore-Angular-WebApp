@@ -11,3 +11,5 @@ This project uses:
 - Entity Framework (`https://github.com/aspnet/EntityFrameworkCore`)
 - Repository (based on `https://github.com/aspnetboilerplate/aspnetboilerplate`)
 - Unit of Work (based on `https://github.com/Arch/UnitOfWork/`)
+- Swagger-UI (`https://github.com/domaindrivendev/Swashbuckle.AspNetCore`)
+- AutoMapper (`https://github.com/AutoMapper/AutoMapper`)

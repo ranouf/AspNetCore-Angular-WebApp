@@ -7,10 +7,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 using Test1.Core;
 using Test1.Infrastructure;
 using Test1.Infrastructure.EntityFramework;
+using AutoMapper;
+using Test1.Web.Controllers.Sample;
 
 public class Startup
 {
@@ -41,6 +44,21 @@ public class Startup
     // Add framework services.
     services.AddMvc();
 
+    //Swagger-ui 
+    services.AddSwaggerGen(c =>
+    {
+      c.SwaggerDoc("v1", new Info {
+        Title = "Test 1",
+        Version = "v1",
+        Description = "Welcome to the marvellous Test1 API!" });
+    });
+
+    //Automapper
+    services.AddAutoMapper(cfg =>
+    {
+      cfg.AddProfile(new SampleProfile());
+    });
+
     // Autofac
     var builder = new ContainerBuilder();
     builder.RegisterModule(new CoreModule());
@@ -57,6 +75,13 @@ public class Startup
     // only enable webpack building in Developement environment
     if (env.IsDevelopment())
     {
+      //Swagger-ui
+      app.UseSwagger();
+      app.UseSwaggerUI(c =>
+      {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Test1 V1");
+      });
+
       app.UseDeveloperExceptionPage();
       app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
       {

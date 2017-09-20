@@ -3,6 +3,7 @@
 		<TargetFramework>netcoreapp2.0</TargetFramework>
 		<TypeScriptToolsVersion>latest</TypeScriptToolsVersion>
 		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+		<UserSecretsId>7f5d01ca-0ff7-4b09-a5c3-c8265bfb4e8d</UserSecretsId>
 	</PropertyGroup>
 	<ItemGroup>
 		<Folder Include="Views\Home\" />
@@ -11,9 +12,14 @@
 	<ItemGroup>
 		<PackageReference Include="Autofac" Version="4.6.1" />
 		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
+		<PackageReference Include="AutoMapper" Version="6.1.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="1.0.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="1.0.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="1.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
