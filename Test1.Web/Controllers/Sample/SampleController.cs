@@ -28,7 +28,7 @@ namespace Test1.Controllers.Sample
     [Route("{id:guid}")]
     public async Task<IActionResult> GetSampleById([FromRoute]Guid id)
     {
-      var result = await _sampleManager.GetByIdAsync(id);
+      var result = await _sampleManager.GetSampleByIdAsync(id);
       return new ObjectResult(Mapper.Map<MySample, MySampleDto>(result));
     }
 
@@ -39,6 +39,47 @@ namespace Test1.Controllers.Sample
     {
       var result = await _sampleManager.GetAllSamples().ToListAsync();
       return new ObjectResult(Mapper.Map<List<MySample>, List<MySampleDto>>(result));
+    }
+
+    // POST
+    [HttpPost]
+    [ProducesResponseType(typeof(List<MySampleDto>), 200)]
+    public async Task<IActionResult> CreateSample([FromBody]MySampleDto dto)
+    {
+      if (!(ModelState.IsValid)){
+        return BadRequest(ModelState);
+      }
+
+      var mySample = new MySample(
+        dto.Value
+      );
+      var result = await _sampleManager.CreateAsync(mySample);
+
+      return new ObjectResult(Mapper.Map<MySample, MySampleDto>(result));
+    }
+
+    // PUT
+    [HttpPut]
+    [ProducesResponseType(typeof(List<MySampleDto>), 200)]
+    public async Task<IActionResult> UpdateSample([FromBody]MySampleDto dto)
+    {
+      if (!(ModelState.IsValid))
+      {
+        return BadRequest(ModelState);
+      }
+      var mySample = await _sampleManager.GetSampleByIdAsync(dto.Id);
+      if (mySample == null)
+      {
+        return NotFound(dto.Id);
+      }
+
+      mySample.Update(
+        dto.Value
+      );
+
+      var result = await _sampleManager.UpdateAsync(mySample);
+
+      return new ObjectResult(Mapper.Map<MySample, MySampleDto>(result));
     }
   }
 }

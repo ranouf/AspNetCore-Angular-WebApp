@@ -25,7 +25,12 @@ namespace Test1.Core.Sample
       _sampleRepository = _unitOfWork.GetRepository<MySample>();
     }
 
-    public async Task<MySample> GetByIdAsync(Guid id)
+    public IQueryable<MySample> GetAllSamples()
+    {
+      return _sampleRepository.GetAll();
+    }
+
+    public async Task<MySample> GetSampleByIdAsync(Guid id)
     {
       var result = await _sampleRepository.FirstOrDefaultAsync(s => s.Id == id);
       if (result == null)
@@ -36,9 +41,17 @@ namespace Test1.Core.Sample
       return result;
     }
 
-    public IQueryable<MySample> GetAllSamples()
+    public async Task<MySample> CreateAsync(MySample mySample)
     {
-      return _sampleRepository.GetAll();
+      var result = await _sampleRepository.InsertAsync(mySample);
+      _unitOfWork.SaveChanges();
+      return result;
+    }
+    public async Task<MySample> UpdateAsync(MySample mySample)
+    {
+      var result = await _sampleRepository.UpdateAsync(mySample);
+      _unitOfWork.SaveChanges();
+      return result;
     }
   }
 }

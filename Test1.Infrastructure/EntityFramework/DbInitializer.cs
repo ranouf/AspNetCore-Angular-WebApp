@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,19 +14,17 @@ namespace Test1.Infrastructure.EntityFramework
   {
     public static void Initialize(AppDbContext context)
     {
-      context.Database.EnsureCreated();
-
+      context.Database.Migrate();
       // Look for any sample.
       if (context.MySamples.Any())
       {
         return;   // DB has been seeded
       }
-
       var mySamples = new MySample[]
       {
-            new MySample{Value="Sample 1"},
-            new MySample{Value="Sample 2"},
-            new MySample{Value="Sample 3"},
+            new MySample("Sample 1"),
+            new MySample("Sample 2"),
+            new MySample("Sample 3"),
       };
       foreach (var mySample in mySamples)
       {
