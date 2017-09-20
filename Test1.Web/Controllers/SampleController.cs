@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Test1.Core.Sample;
+using Test1.Core.Sample.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Test1.Controllers
 {
@@ -19,11 +21,22 @@ namespace Test1.Controllers
       _sampleManager = sampleManager;
     }
 
-    // GET api/values
+    // GET
     [HttpGet]
-    public string SayHello()
+    [ProducesResponseType(typeof(MySample), 200)]
+    [Route("{id:guid}")]
+    public async Task<IActionResult> GetSampleById([FromRoute]Guid id)
     {
-      return _sampleManager.SayHello();
+      return new ObjectResult(await _sampleManager.GetByIdAsync(id));
+    }
+
+    // GET
+    [HttpGet]
+    [ProducesResponseType(typeof(List<MySample>), 200)]
+    public async Task<IActionResult> GetSamples()
+    {
+      var result = await _sampleManager.GetAllSamples().ToListAsync();
+      return new ObjectResult(result);
     }
   }
 }

@@ -3,12 +3,14 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using Test1.Core;
 using Test1.Infrastructure;
+using Test1.Infrastructure.EntityFramework;
 
 public class Startup
 {
@@ -33,6 +35,9 @@ public class Startup
   // This method gets called by the runtime. Use this method to add services to the container.
   public IServiceProvider ConfigureServices(IServiceCollection services)
   {
+    services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
     // Add framework services.
     services.AddMvc();
 
