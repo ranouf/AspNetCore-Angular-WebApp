@@ -14,3 +14,7 @@ This project uses:
 - Swagger-UI (`https://github.com/domaindrivendev/Swashbuckle.AspNetCore`)
 - AutoMapper (`https://github.com/AutoMapper/AutoMapper`)
 - NswagStudio for Angular services from WebApi generation(`https://github.com/RSuter/NSwag`)
+
+## Documentation:
+- Angular:
+  * Routing: https://angular.io/guide/router

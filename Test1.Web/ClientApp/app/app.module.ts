@@ -1,30 +1,36 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
+import { NgModule }       from '@angular/core';
+import { BrowserModule }  from '@angular/platform-browser';
+import { FormsModule }    from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdButtonModule, MdCheckboxModule, MdInputModule } from '@angular/material';
 
-import { CovalentLayoutModule, CovalentStepsModule, CovalentMessageModule, CovalentSearchModule } from '@covalent/core';
+import { Router } from '@angular/router';
+
+import { AppComponent }            from './app.component';
+import { AppRoutingModule }        from './app-routing.module';
+
+import { DashboardModule } from './components/dashboard/dashboard.module';
+import { SamplesModule } from './components/samples/samples.module';
 
 @NgModule({
-	declarations: [
-		AppComponent
-	],
 	imports: [
 		BrowserModule,
+		FormsModule,
 		BrowserAnimationsModule,
-		MdButtonModule,
-		MdCheckboxModule,
-		MdInputModule,
 
-		//Covalent
-		CovalentLayoutModule,
-		CovalentStepsModule,
-		CovalentMessageModule,
-		CovalentSearchModule,
+    //Test1
+		AppRoutingModule,
+    DashboardModule,
+    SamplesModule,
+	],
+	declarations: [
+		AppComponent
 	],
 	providers: [],
 	bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+	// Diagnostic only: inspect router configuration
+	constructor(router: Router) {
+		console.log('Routes: ', JSON.stringify(router.config, undefined, 2));
+	}
+}
