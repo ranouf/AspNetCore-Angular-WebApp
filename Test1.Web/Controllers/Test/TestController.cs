@@ -9,14 +9,14 @@ using Test1.Web.Controllers.Sample.Dto;
 using AutoMapper;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Test1.Controllers.Sample
+namespace Test1.Controllers.Test
 {
   [Route("api/v1/[controller]")]
-  public class SampleController : Controller
+  public class TestController : Controller
   {
     private SampleManager _sampleManager;
 
-    public SampleController(
+    public TestController(
       SampleManager sampleManager
     )
     {
@@ -25,10 +25,10 @@ namespace Test1.Controllers.Sample
 
     // GET
     [HttpGet]
-    [SwaggerOperation("GetSampleById")]
+    [SwaggerOperation("GetTestById")]
     [ProducesResponseType(typeof(MySampleDto), 200)]
     [Route("{id:guid}")]
-    public async Task<IActionResult> GetSampleById([FromRoute]Guid id)
+    public async Task<IActionResult> GetTestById([FromRoute]Guid id)
     {
       var result = await _sampleManager.GetSampleByIdAsync(id);
       return new ObjectResult(Mapper.Map<MySample, MySampleDto>(result));
@@ -36,9 +36,9 @@ namespace Test1.Controllers.Sample
 
     // GET
     [HttpGet]
-    [SwaggerOperation("GetSamples")]
+    [SwaggerOperation("GetTestes")]
     [ProducesResponseType(typeof(List<MySampleDto>), 200)]
-    public async Task<IActionResult> GetSamples()
+    public async Task<IActionResult> GetTests()
     {
       var result = await _sampleManager.GetAllSamples().ToListAsync();
       return new ObjectResult(Mapper.Map<List<MySample>, List<MySampleDto>>(result));
@@ -46,9 +46,9 @@ namespace Test1.Controllers.Sample
 
     // POST
     [HttpPost]
-    [SwaggerOperation("CreateSample")]
+    [SwaggerOperation("CreateTest")]
     [ProducesResponseType(typeof(List<MySampleDto>), 200)]
-    public async Task<IActionResult> CreateSample([FromBody]MySampleDto dto)
+    public async Task<IActionResult> CreateTest([FromBody]MySampleDto dto)
     {
       if (!(ModelState.IsValid)){
         return BadRequest(ModelState);
@@ -64,9 +64,9 @@ namespace Test1.Controllers.Sample
 
     // PUT
     [HttpPut]
-    [SwaggerOperation("UpdateSample")]
+    [SwaggerOperation("UpdateTest")]
     [ProducesResponseType(typeof(List<MySampleDto>), 200)]
-    public async Task<IActionResult> UpdateSample([FromBody]MySampleDto dto)
+    public async Task<IActionResult> UpdateTest([FromBody]MySampleDto dto)
     {
       if (!(ModelState.IsValid))
       {
