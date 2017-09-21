@@ -47,11 +47,18 @@ namespace Test1.Core.Sample
       _unitOfWork.SaveChanges();
       return result;
     }
+
     public async Task<MySample> UpdateAsync(MySample mySample)
     {
       var result = await _sampleRepository.UpdateAsync(mySample);
       _unitOfWork.SaveChanges();
       return result;
+    }
+
+    public async Task DeleteAsync(MySample mySample)
+    {
+      await _sampleRepository.DeleteAsync(mySample);
+      _unitOfWork.SaveChanges();
     }
   }
 }
