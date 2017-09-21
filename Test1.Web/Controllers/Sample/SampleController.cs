@@ -7,6 +7,7 @@ using Test1.Core.Sample.Entities;
 using Microsoft.EntityFrameworkCore;
 using Test1.Web.Controllers.Sample.Dto;
 using AutoMapper;
+using System.Net.Http;
 
 namespace Test1.Controllers.Sample
 {
@@ -89,7 +90,7 @@ namespace Test1.Controllers.Sample
 
     // DEL
     [HttpDelete]
-    [ProducesResponseType(typeof(void), 200)]
+    [ProducesResponseType(typeof(HttpResponseMessage), 200)]
     [Route("{id:guid}")]
     public async Task<IActionResult> DeleteSample([FromRoute]Guid id)
     {
@@ -101,7 +102,7 @@ namespace Test1.Controllers.Sample
 
       await _sampleManager.DeleteAsync(mySample);
 
-      return NoContent();
+      return Ok();
     }
   }
 }
