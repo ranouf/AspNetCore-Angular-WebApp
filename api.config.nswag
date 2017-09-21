@@ -11,8 +11,8 @@
       ],
       "isAspNetCore": true,
       "controllerNames": [
-        "Test1.Controllers.Test.TestController",
-        "Test1.Controllers.Sample.SampleController"
+        "Test1.Controllers.Sample.SampleController",
+        "Test1.Controllers.Test.TestController"
       ],
       "defaultUrlTemplate": "api/{controller}/{id?}",
       "defaultPropertyNameHandling": "Default",
@@ -29,5 +29,41 @@
       "output": null
     }
   },
-  "codeGenerators": {}
+  "codeGenerators": {
+    "swaggerToTypeScriptClient": {
+      "className": "{controller}Client",
+      "moduleName": "",
+      "namespace": "",
+      "typeScriptVersion": 2.0,
+      "template": "Fetch",
+      "promiseType": "Promise",
+      "dateTimeType": "Date",
+      "nullValue": "Undefined",
+      "generateClientClasses": true,
+      "generateClientInterfaces": false,
+      "generateOptionalParameters": false,
+      "wrapDtoExceptions": false,
+      "clientBaseClass": "SampleBase",
+      "wrapResponses": false,
+      "generateResponseClasses": true,
+      "responseClass": "SwaggerResponse",
+      "useTransformOptionsMethod": true,
+      "useTransformResultMethod": true,
+      "generateDtoTypes": true,
+      "operationGenerationMode": "MultipleClientsFromOperationId",
+      "markOptionalProperties": true,
+      "generateCloneMethod": false,
+      "typeStyle": "Class",
+      "extensionCode": "Test1.Web/ClientApp/app/services/api.services.extension.ts",
+      "generateDefaultValues": true,
+      "excludedTypeNames": [],
+      "handleReferences": false,
+      "generateConstructorInterface": true,
+      "importRequiredTypes": true,
+      "useGetBaseUrlMethod": false,
+      "baseUrlTokenName": "API_BASE_URL",
+      "serviceHost": ".",
+      "output": "Test1.Web/ClientApp/app/services/api.services.ts"
+    }
+  }
 }
