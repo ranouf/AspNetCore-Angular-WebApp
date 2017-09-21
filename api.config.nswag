@@ -12,14 +12,14 @@
             "C:\\Users\\SideKick\\.nuget\\packages"
           ]
         },
-        "defaultUrlTemplate": "api/{controller}/{id?}",
+        "defaultUrlTemplate": "api/v1/{controller}/{id?}",
         "title": "Web API Swagger specification",
         "version": "1.0.0",
         "isAspNetCore": true,
         "addMissingPathParameters": false,
         "defaultEnumHandling": "Integer",
         "defaultReferenceTypeNullHandling": "Null",
-        "defaultPropertyNameHandling": "Default",
+        "defaultPropertyNameHandling": "CamelCase",
         "generateAbstractProperties": false,
         "flattenInheritanceHierarchy": false,
         "generateKnownTypes": true,
@@ -31,7 +31,11 @@
           "defaultMembersSearchFlags": "Instance, Public",
           "serializeCompilerGeneratedMembers": false,
           "ignoreSerializableInterface": false,
-          "ignoreSerializableAttribute": true
+          "ignoreSerializableAttribute": true,
+          "namingStrategy": {
+            "processDictionaryKeys": true,
+            "overrideSpecifiedNames": true
+          }
         }
       },
       "assemblyPaths": [
@@ -42,8 +46,8 @@
         "Test1.Controllers.Test.TestController"
       ],
       "isAspNetCore": true,
-      "defaultUrlTemplate": "api/{controller}/{id?}",
-      "defaultPropertyNameHandling": "Default",
+      "defaultUrlTemplate": "api/v1/{controller}/{id?}",
+      "defaultPropertyNameHandling": "CamelCase",
       "defaultReferenceTypeNullHandling": "Null",
       "defaultEnumHandling": "Integer",
       "flattenInheritanceHierarchy": false,

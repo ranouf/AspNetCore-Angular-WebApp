@@ -11,6 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test1.Infrastructure", "Tes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A10AE753-3CFA-47C0-956A-868A49C6183F}"
 	ProjectSection(SolutionItems) = preProject
+		api.config.nswag = api.config.nswag
 		README.md = README.md
 	EndProjectSection
 EndProject

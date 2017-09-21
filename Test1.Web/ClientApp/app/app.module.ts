@@ -7,8 +7,6 @@ import { MdButtonModule, MdCheckboxModule, MdInputModule } from '@angular/materi
 
 import { CovalentLayoutModule, CovalentStepsModule, CovalentMessageModule, CovalentSearchModule } from '@covalent/core';
 
-import { Sample } from './services/api.services';
-
 @NgModule({
 	declarations: [
 		AppComponent
@@ -26,7 +24,7 @@ import { Sample } from './services/api.services';
 		CovalentMessageModule,
 		CovalentSearchModule,
 	],
-	providers: [Sample],
+	providers: [],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

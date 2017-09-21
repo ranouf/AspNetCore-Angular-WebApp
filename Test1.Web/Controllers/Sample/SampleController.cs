@@ -7,7 +7,6 @@ using Test1.Core.Sample.Entities;
 using Microsoft.EntityFrameworkCore;
 using Test1.Web.Controllers.Sample.Dto;
 using AutoMapper;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Test1.Controllers.Sample
 {
@@ -25,18 +24,21 @@ namespace Test1.Controllers.Sample
 
     // GET
     [HttpGet]
-    [SwaggerOperation("GetSampleById")]
     [ProducesResponseType(typeof(MySampleDto), 200)]
     [Route("{id:guid}")]
     public async Task<IActionResult> GetSampleById([FromRoute]Guid id)
     {
+      if (!(ModelState.IsValid))
+      {
+        return BadRequest(ModelState);
+      }
+
       var result = await _sampleManager.GetSampleByIdAsync(id);
       return new ObjectResult(Mapper.Map<MySample, MySampleDto>(result));
     }
 
     // GET
     [HttpGet]
-    [SwaggerOperation("GetSamples")]
     [ProducesResponseType(typeof(List<MySampleDto>), 200)]
     public async Task<IActionResult> GetSamples()
     {
@@ -46,8 +48,7 @@ namespace Test1.Controllers.Sample
 
     // POST
     [HttpPost]
-    [SwaggerOperation("CreateSample")]
-    [ProducesResponseType(typeof(List<MySampleDto>), 200)]
+    [ProducesResponseType(typeof(MySampleDto), 200)]
     public async Task<IActionResult> CreateSample([FromBody]MySampleDto dto)
     {
       if (!(ModelState.IsValid)){
@@ -64,8 +65,7 @@ namespace Test1.Controllers.Sample
 
     // PUT
     [HttpPut]
-    [SwaggerOperation("UpdateSample")]
-    [ProducesResponseType(typeof(List<MySampleDto>), 200)]
+    [ProducesResponseType(typeof(MySampleDto), 200)]
     public async Task<IActionResult> UpdateSample([FromBody]MySampleDto dto)
     {
       if (!(ModelState.IsValid))
@@ -85,6 +85,23 @@ namespace Test1.Controllers.Sample
       var result = await _sampleManager.UpdateAsync(mySample);
 
       return new ObjectResult(Mapper.Map<MySample, MySampleDto>(result));
+    }
+
+    // DEL
+    [HttpDelete]
+    [ProducesResponseType(typeof(void), 200)]
+    [Route("{id:guid}")]
+    public async Task<IActionResult> DeleteSample([FromRoute]Guid id)
+    {
+      var mySample = await _sampleManager.GetSampleByIdAsync(id);
+      if (mySample == null)
+      {
+        return NotFound(id);
+      }
+
+      await _sampleManager.DeleteAsync(mySample);
+
+      return NoContent();
     }
   }
 }
