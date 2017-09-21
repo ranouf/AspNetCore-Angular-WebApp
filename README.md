@@ -13,4 +13,4 @@ This project uses:
 - Unit of Work (based on `https://github.com/Arch/UnitOfWork/`)
 - Swagger-UI (`https://github.com/domaindrivendev/Swashbuckle.AspNetCore`)
 - AutoMapper (`https://github.com/AutoMapper/AutoMapper`)
-- NswagStudio for WebApi Angular services generation(`https://github.com/RSuter/NSwag`)
+- NswagStudio for Angular services from WebApi generation(`https://github.com/RSuter/NSwag`)
