@@ -1,19 +1,47 @@
 ﻿{
   "swaggerGenerator": {
     "webApiToSwagger": {
+      "settings": {
+        "assemblySettings": {
+          "assemblyPaths": [
+            "C:\\Users\\SideKick\\Documents\\Visual Studio 2017\\Projects\\tests\\Test1\\Test1.Web\\bin\\Debug\\netcoreapp2.0\\Test1.Web.dll"
+          ],
+          "referencePaths": [
+            "C:/Program Files/dotnet/shared/Microsoft.NETCore.App/2.0.0",
+            "C:\\Users\\SideKick\\Documents\\Visual Studio 2017\\Projects\\tests\\Test1\\Test1.Web\\bin\\Release\\PublishOutput",
+            "C:\\Users\\SideKick\\.nuget\\packages"
+          ]
+        },
+        "defaultUrlTemplate": "api/{controller}/{id?}",
+        "title": "Web API Swagger specification",
+        "version": "1.0.0",
+        "isAspNetCore": true,
+        "addMissingPathParameters": false,
+        "defaultEnumHandling": "Integer",
+        "defaultReferenceTypeNullHandling": "Null",
+        "defaultPropertyNameHandling": "Default",
+        "generateAbstractProperties": false,
+        "flattenInheritanceHierarchy": false,
+        "generateKnownTypes": true,
+        "generateXmlObjects": false,
+        "ignoreObsoleteProperties": false,
+        "schemaType": "Swagger2",
+        "actualContractResolver": {
+          "dynamicCodeGeneration": true,
+          "defaultMembersSearchFlags": "Instance, Public",
+          "serializeCompilerGeneratedMembers": false,
+          "ignoreSerializableInterface": false,
+          "ignoreSerializableAttribute": true
+        }
+      },
       "assemblyPaths": [
-        "Test1.Web/bin/Debug/netcoreapp2.0/Test1.Web.dll"
+        "C:\\Users\\SideKick\\Documents\\Visual Studio 2017\\Projects\\tests\\Test1\\Test1.Web\\bin\\Debug\\netcoreapp2.0\\Test1.Web.dll"
       ],
-      "referencePaths": [
-        "C:/Program Files/dotnet/shared/Microsoft.NETCore.App/2.0.0",
-        "Test1.Web/bin/Release/PublishOutput",
-        "../../../../../.nuget/packages"
-      ],
-      "isAspNetCore": true,
       "controllerNames": [
         "Test1.Controllers.Sample.SampleController",
         "Test1.Controllers.Test.TestController"
       ],
+      "isAspNetCore": true,
       "defaultUrlTemplate": "api/{controller}/{id?}",
       "defaultPropertyNameHandling": "Default",
       "defaultReferenceTypeNullHandling": "Null",
@@ -26,16 +54,21 @@
       "ignoreObsoleteProperties": false,
       "infoTitle": "Web API Swagger specification",
       "infoVersion": "1.0.0",
+      "referencePaths": [
+        "C:/Program Files/dotnet/shared/Microsoft.NETCore.App/2.0.0",
+        "C:\\Users\\SideKick\\Documents\\Visual Studio 2017\\Projects\\tests\\Test1\\Test1.Web\\bin\\Release\\PublishOutput",
+        "C:\\Users\\SideKick\\.nuget\\packages"
+      ],
       "output": null
     }
   },
   "codeGenerators": {
     "swaggerToTypeScriptClient": {
-      "className": "{controller}Client",
+      "className": "{controller}Service",
       "moduleName": "",
       "namespace": "",
       "typeScriptVersion": 2.0,
-      "template": "Fetch",
+      "template": "Angular",
       "promiseType": "Promise",
       "dateTimeType": "Date",
       "nullValue": "Undefined",
@@ -43,7 +76,7 @@
       "generateClientInterfaces": false,
       "generateOptionalParameters": false,
       "wrapDtoExceptions": false,
-      "clientBaseClass": "SampleBase",
+      "clientBaseClass": "ServiceBase",
       "wrapResponses": false,
       "generateResponseClasses": true,
       "responseClass": "SwaggerResponse",
@@ -53,8 +86,8 @@
       "operationGenerationMode": "MultipleClientsFromOperationId",
       "markOptionalProperties": true,
       "generateCloneMethod": false,
-      "typeStyle": "Class",
-      "extensionCode": "Test1.Web/ClientApp/app/services/api.services.extension.ts",
+      "typeStyle": "Interface",
+      "extensionCode": "C:\\Users\\SideKick\\Documents\\Visual Studio 2017\\Projects\\tests\\Test1\\Test1.Web\\ClientApp\\app\\services\\api.services.extension.ts",
       "generateDefaultValues": true,
       "excludedTypeNames": [],
       "handleReferences": false,
@@ -62,8 +95,9 @@
       "importRequiredTypes": true,
       "useGetBaseUrlMethod": false,
       "baseUrlTokenName": "API_BASE_URL",
-      "serviceHost": ".",
-      "output": "Test1.Web/ClientApp/app/services/api.services.ts"
+      "serviceHost": "",
+      "output": "C:\\Users\\SideKick\\Documents\\Visual Studio 2017\\Projects\\tests\\Test1\\Test1.Web\\ClientApp\\app\\services\\api.services.ts"
     }
-  }
+  },
+  "runtime": "NetCore20"
 }

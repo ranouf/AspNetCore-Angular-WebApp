@@ -1,6 +1,6 @@
 import * as generated from "./api.services";
 
-export class ClientBase {
+export class ServiceBase {
 	protected transformOptions(options: any) {
 		console.log("HTTP call, options: " + JSON.stringify(options));
 

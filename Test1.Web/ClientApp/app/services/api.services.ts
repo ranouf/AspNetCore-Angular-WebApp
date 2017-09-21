@@ -20,8 +20,26 @@ import { Http, Headers, ResponseContentType, Response, RequestOptionsArgs } from
 
 export const API_BASE_URL = new OpaqueToken('API_BASE_URL');
 
+export class ServiceBase {
+	protected transformOptions(options: any) {
+		console.log("HTTP call, options: " + JSON.stringify(options));
+
+		options.headers.append("myheader", "myvalue");
+		return Promise.resolve(options);
+	}
+
+	protected transformResult(url: string, response: any, processor: (response: any) => any) {
+		if (response.status !== 200 && response.status !== 204) {
+			//TODO Manage Error
+		}
+		else {
+			return processor(response);
+		}
+	}
+}
+
 @Injectable()
-export class Client extends SampleBase {
+export class Service extends ServiceBase {
     private http: Http;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -32,10 +50,7 @@ export class Client extends SampleBase {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    /**
-     * @return Success
-     */
-    getSampleById(id: string): Observable<MySampleDto> {
+    getSampleById(id: string): Observable<MySampleDto | null> {
         let url_ = this.baseUrl + "/api/v1/Sample/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -59,14 +74,14 @@ export class Client extends SampleBase {
                 try {
                     return this.transformResult(url_, response_, (r) => this.processGetSampleById(r));
                 } catch (e) {
-                    return <Observable<MySampleDto>><any>Observable.throw(e);
+                    return <Observable<MySampleDto | null>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<MySampleDto>><any>Observable.throw(response_);
+                return <Observable<MySampleDto | null>><any>Observable.throw(response_);
         });
     }
 
-    protected processGetSampleById(response: Response): Observable<MySampleDto> {
+    protected processGetSampleById(response: Response): Observable<MySampleDto | null> {
         const status = response.status; 
 
         let _headers: any = response.headers ? response.headers.toJSON() : {};
@@ -79,13 +94,10 @@ export class Client extends SampleBase {
             const _responseText = response.text();
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Observable.of<MySampleDto>(<any>null);
+        return Observable.of<MySampleDto | null>(<any>null);
     }
 
-    /**
-     * @return Success
-     */
-    getSamples(): Observable<MySampleDto[]> {
+    getSamples(): Observable<MySampleDto[] | null> {
         let url_ = this.baseUrl + "/api/v1/Sample";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -106,14 +118,14 @@ export class Client extends SampleBase {
                 try {
                     return this.transformResult(url_, response_, (r) => this.processGetSamples(r));
                 } catch (e) {
-                    return <Observable<MySampleDto[]>><any>Observable.throw(e);
+                    return <Observable<MySampleDto[] | null>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<MySampleDto[]>><any>Observable.throw(response_);
+                return <Observable<MySampleDto[] | null>><any>Observable.throw(response_);
         });
     }
 
-    protected processGetSamples(response: Response): Observable<MySampleDto[]> {
+    protected processGetSamples(response: Response): Observable<MySampleDto[] | null> {
         const status = response.status; 
 
         let _headers: any = response.headers ? response.headers.toJSON() : {};
@@ -126,63 +138,10 @@ export class Client extends SampleBase {
             const _responseText = response.text();
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Observable.of<MySampleDto[]>(<any>null);
+        return Observable.of<MySampleDto[] | null>(<any>null);
     }
 
-    /**
-     * @return Success
-     */
-    updateSample(dto: MySampleDto | null): Observable<MySampleDto[]> {
-        let url_ = this.baseUrl + "/api/v1/Sample";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(dto);
-        
-        let options_ = {
-            body: content_,
-            method: "put",
-            headers: new Headers({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
-            return this.http.request(url_, transformedOptions_);
-        }).flatMap((response_) => {
-            return this.transformResult(url_, response_, (r) => this.processUpdateSample(r));
-        }).catch((response_: any) => {
-            if (response_ instanceof Response) {
-                try {
-                    return this.transformResult(url_, response_, (r) => this.processUpdateSample(r));
-                } catch (e) {
-                    return <Observable<MySampleDto[]>><any>Observable.throw(e);
-                }
-            } else
-                return <Observable<MySampleDto[]>><any>Observable.throw(response_);
-        });
-    }
-
-    protected processUpdateSample(response: Response): Observable<MySampleDto[]> {
-        const status = response.status; 
-
-        let _headers: any = response.headers ? response.headers.toJSON() : {};
-        if (status === 200) {
-            const _responseText = response.text();
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <MySampleDto[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return Observable.of(result200);
-        } else if (status !== 200 && status !== 204) {
-            const _responseText = response.text();
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-        }
-        return Observable.of<MySampleDto[]>(<any>null);
-    }
-
-    /**
-     * @return Success
-     */
-    createSample(dto: MySampleDto | null): Observable<MySampleDto[]> {
+    createSample(dto: MySampleDto | null): Observable<MySampleDto[] | null> {
         let url_ = this.baseUrl + "/api/v1/Sample";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -206,14 +165,14 @@ export class Client extends SampleBase {
                 try {
                     return this.transformResult(url_, response_, (r) => this.processCreateSample(r));
                 } catch (e) {
-                    return <Observable<MySampleDto[]>><any>Observable.throw(e);
+                    return <Observable<MySampleDto[] | null>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<MySampleDto[]>><any>Observable.throw(response_);
+                return <Observable<MySampleDto[] | null>><any>Observable.throw(response_);
         });
     }
 
-    protected processCreateSample(response: Response): Observable<MySampleDto[]> {
+    protected processCreateSample(response: Response): Observable<MySampleDto[] | null> {
         const status = response.status; 
 
         let _headers: any = response.headers ? response.headers.toJSON() : {};
@@ -226,13 +185,57 @@ export class Client extends SampleBase {
             const _responseText = response.text();
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Observable.of<MySampleDto[]>(<any>null);
+        return Observable.of<MySampleDto[] | null>(<any>null);
     }
 
-    /**
-     * @return Success
-     */
-    getTestById(id: string): Observable<MySampleDto> {
+    updateSample(dto: MySampleDto | null): Observable<MySampleDto[] | null> {
+        let url_ = this.baseUrl + "/api/v1/Sample";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(dto);
+        
+        let options_ = {
+            body: content_,
+            method: "put",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).flatMap((response_) => {
+            return this.transformResult(url_, response_, (r) => this.processUpdateSample(r));
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.transformResult(url_, response_, (r) => this.processUpdateSample(r));
+                } catch (e) {
+                    return <Observable<MySampleDto[] | null>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<MySampleDto[] | null>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processUpdateSample(response: Response): Observable<MySampleDto[] | null> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            result200 = _responseText === "" ? null : <MySampleDto[]>JSON.parse(_responseText, this.jsonParseReviver);
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<MySampleDto[] | null>(<any>null);
+    }
+
+    getTestById(id: string): Observable<MySampleDto | null> {
         let url_ = this.baseUrl + "/api/v1/Test/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -256,14 +259,14 @@ export class Client extends SampleBase {
                 try {
                     return this.transformResult(url_, response_, (r) => this.processGetTestById(r));
                 } catch (e) {
-                    return <Observable<MySampleDto>><any>Observable.throw(e);
+                    return <Observable<MySampleDto | null>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<MySampleDto>><any>Observable.throw(response_);
+                return <Observable<MySampleDto | null>><any>Observable.throw(response_);
         });
     }
 
-    protected processGetTestById(response: Response): Observable<MySampleDto> {
+    protected processGetTestById(response: Response): Observable<MySampleDto | null> {
         const status = response.status; 
 
         let _headers: any = response.headers ? response.headers.toJSON() : {};
@@ -276,13 +279,10 @@ export class Client extends SampleBase {
             const _responseText = response.text();
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Observable.of<MySampleDto>(<any>null);
+        return Observable.of<MySampleDto | null>(<any>null);
     }
 
-    /**
-     * @return Success
-     */
-    getTestes(): Observable<MySampleDto[]> {
+    getTestes(): Observable<MySampleDto[] | null> {
         let url_ = this.baseUrl + "/api/v1/Test";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -303,14 +303,14 @@ export class Client extends SampleBase {
                 try {
                     return this.transformResult(url_, response_, (r) => this.processGetTestes(r));
                 } catch (e) {
-                    return <Observable<MySampleDto[]>><any>Observable.throw(e);
+                    return <Observable<MySampleDto[] | null>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<MySampleDto[]>><any>Observable.throw(response_);
+                return <Observable<MySampleDto[] | null>><any>Observable.throw(response_);
         });
     }
 
-    protected processGetTestes(response: Response): Observable<MySampleDto[]> {
+    protected processGetTestes(response: Response): Observable<MySampleDto[] | null> {
         const status = response.status; 
 
         let _headers: any = response.headers ? response.headers.toJSON() : {};
@@ -323,63 +323,10 @@ export class Client extends SampleBase {
             const _responseText = response.text();
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Observable.of<MySampleDto[]>(<any>null);
+        return Observable.of<MySampleDto[] | null>(<any>null);
     }
 
-    /**
-     * @return Success
-     */
-    updateTest(dto: MySampleDto | null): Observable<MySampleDto[]> {
-        let url_ = this.baseUrl + "/api/v1/Test";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(dto);
-        
-        let options_ = {
-            body: content_,
-            method: "put",
-            headers: new Headers({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
-            return this.http.request(url_, transformedOptions_);
-        }).flatMap((response_) => {
-            return this.transformResult(url_, response_, (r) => this.processUpdateTest(r));
-        }).catch((response_: any) => {
-            if (response_ instanceof Response) {
-                try {
-                    return this.transformResult(url_, response_, (r) => this.processUpdateTest(r));
-                } catch (e) {
-                    return <Observable<MySampleDto[]>><any>Observable.throw(e);
-                }
-            } else
-                return <Observable<MySampleDto[]>><any>Observable.throw(response_);
-        });
-    }
-
-    protected processUpdateTest(response: Response): Observable<MySampleDto[]> {
-        const status = response.status; 
-
-        let _headers: any = response.headers ? response.headers.toJSON() : {};
-        if (status === 200) {
-            const _responseText = response.text();
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <MySampleDto[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return Observable.of(result200);
-        } else if (status !== 200 && status !== 204) {
-            const _responseText = response.text();
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-        }
-        return Observable.of<MySampleDto[]>(<any>null);
-    }
-
-    /**
-     * @return Success
-     */
-    createTest(dto: MySampleDto | null): Observable<MySampleDto[]> {
+    createTest(dto: MySampleDto | null): Observable<MySampleDto[] | null> {
         let url_ = this.baseUrl + "/api/v1/Test";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -403,14 +350,14 @@ export class Client extends SampleBase {
                 try {
                     return this.transformResult(url_, response_, (r) => this.processCreateTest(r));
                 } catch (e) {
-                    return <Observable<MySampleDto[]>><any>Observable.throw(e);
+                    return <Observable<MySampleDto[] | null>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<MySampleDto[]>><any>Observable.throw(response_);
+                return <Observable<MySampleDto[] | null>><any>Observable.throw(response_);
         });
     }
 
-    protected processCreateTest(response: Response): Observable<MySampleDto[]> {
+    protected processCreateTest(response: Response): Observable<MySampleDto[] | null> {
         const status = response.status; 
 
         let _headers: any = response.headers ? response.headers.toJSON() : {};
@@ -423,13 +370,60 @@ export class Client extends SampleBase {
             const _responseText = response.text();
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Observable.of<MySampleDto[]>(<any>null);
+        return Observable.of<MySampleDto[] | null>(<any>null);
+    }
+
+    updateTest(dto: MySampleDto | null): Observable<MySampleDto[] | null> {
+        let url_ = this.baseUrl + "/api/v1/Test";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(dto);
+        
+        let options_ = {
+            body: content_,
+            method: "put",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).flatMap((response_) => {
+            return this.transformResult(url_, response_, (r) => this.processUpdateTest(r));
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.transformResult(url_, response_, (r) => this.processUpdateTest(r));
+                } catch (e) {
+                    return <Observable<MySampleDto[] | null>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<MySampleDto[] | null>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processUpdateTest(response: Response): Observable<MySampleDto[] | null> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            result200 = _responseText === "" ? null : <MySampleDto[]>JSON.parse(_responseText, this.jsonParseReviver);
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<MySampleDto[] | null>(<any>null);
     }
 }
 
 export interface MySampleDto {
-    id?: string | undefined;
-    value: string;
+    Id: string;
+    Value: string;
 }
 
 export class SwaggerException extends Error {
@@ -472,22 +466,4 @@ function blobToText(blob: any): Observable<string> {
         }
         reader.readAsText(blob); 
     });
-}
-
-export class ClientBase {
-	protected transformOptions(options: any) {
-		console.log("HTTP call, options: " + JSON.stringify(options));
-
-		options.headers.append("myheader", "myvalue");
-		return Promise.resolve(options);
-	}
-
-	protected transformResult(url: string, response: any, processor: (response: any) => any) {
-		if (response.status !== 200 && response.status !== 204) {
-			//TODO Manage Error
-		}
-		else {
-			return processor(response);
-		}
-	}
 }
