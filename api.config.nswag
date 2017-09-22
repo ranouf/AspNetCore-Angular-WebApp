@@ -7,7 +7,7 @@
             "C:\\Users\\SideKick\\Documents\\Visual Studio 2017\\Projects\\tests\\Test1\\Test1.Web\\bin\\Debug\\netcoreapp2.0\\Test1.Web.dll"
           ],
           "referencePaths": [
-            "C:/Program Files/dotnet/shared/Microsoft.NETCore.App/2.0.0",
+            "C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App\\2.0.0",
             "C:\\Users\\SideKick\\Documents\\Visual Studio 2017\\Projects\\tests\\Test1\\Test1.Web\\bin\\Release\\PublishOutput",
             "C:\\Users\\SideKick\\.nuget\\packages"
           ]
@@ -60,7 +60,7 @@
       "infoTitle": "Web API Swagger specification",
       "infoVersion": "1.0.0",
       "referencePaths": [
-        "C:/Program Files/dotnet/shared/Microsoft.NETCore.App/2.0.0",
+        "C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App\\2.0.0",
         "C:\\Users\\SideKick\\Documents\\Visual Studio 2017\\Projects\\tests\\Test1\\Test1.Web\\bin\\Release\\PublishOutput",
         "C:\\Users\\SideKick\\.nuget\\packages"
       ],
