@@ -42,8 +42,9 @@
         "C:\\Users\\SideKick\\Documents\\Visual Studio 2017\\Projects\\tests\\Test1\\Test1.Web\\bin\\Debug\\netcoreapp2.0\\Test1.Web.dll"
       ],
       "controllerNames": [
-        "Test1.Controllers.Sample.SampleController",
-        "Test1.Controllers.Test.TestController"
+        "Test1.Controllers.Samples.SamplesController",
+        "Test1.Web.Controllers.Authorization.AccountController",
+        "Test1.Web.Controllers.Authorization.AuthenticationController"
       ],
       "isAspNetCore": true,
       "defaultUrlTemplate": "api/v1/{controller}/{id?}",

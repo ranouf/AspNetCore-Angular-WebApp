@@ -14,7 +14,12 @@ This project uses:
 - Swagger-UI (`https://github.com/domaindrivendev/Swashbuckle.AspNetCore`)
 - AutoMapper (`https://github.com/AutoMapper/AutoMapper`)
 - NswagStudio for Angular services from WebApi generation(`https://github.com/RSuter/NSwag`)
+- Log (`https://github.com/serilog/serilog`)
 
 ## Documentation:
 - Angular:
-  * Routing: https://angular.io/guide/router
+  * Routing: `https://angular.io/guide/router`
+- Asp.Net:
+  * Identity: 
+      > `https://fullstackmark.com/post/10/user-authentication-with-angular-and-asp-net-core`
+      > `https://stackoverflow.com/a/37173202/6123422`

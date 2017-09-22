@@ -13,7 +13,12 @@ using Test1.Core;
 using Test1.Infrastructure;
 using Test1.Infrastructure.EntityFramework;
 using AutoMapper;
-using Test1.Web.Controllers.Sample;
+using Test1.Web.Controllers.Samples;
+using Test1.Core.Authentication.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Serilog;
+using Test1.Web.Controllers.Users;
 
 public class Startup
 {
@@ -29,6 +34,10 @@ public class Startup
         .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
         .AddEnvironmentVariables();
     Configuration = builder.Build();
+
+    Log.Logger = new LoggerConfiguration()
+        .WriteTo.RollingFile(pathFormat: "logs\\log-web-{Date}.log")
+        .CreateLogger();
   }
 
   public IConfigurationRoot Configuration { get; }
@@ -38,8 +47,18 @@ public class Startup
   // This method gets called by the runtime. Use this method to add services to the container.
   public IServiceProvider ConfigureServices(IServiceCollection services)
   {
+    //DataBase
     services.AddDbContext<AppDbContext>(options =>
-        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+    );
+
+    //Identity
+    services.AddIdentity<User, Role>()
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders()
+            .AddUserStore<UserStore<User, Role, AppDbContext, Guid>>()
+            .AddRoleStore<RoleStore<Role, AppDbContext, Guid>>();
+
 
     // Add framework services.
     services.AddMvc();
@@ -47,16 +66,19 @@ public class Startup
     //Swagger-ui 
     services.AddSwaggerGen(c =>
     {
-      c.SwaggerDoc("v1", new Info {
+      c.SwaggerDoc("v1", new Info
+      {
         Title = "Test 1",
         Version = "v1",
-        Description = "Welcome to the marvellous Test1 API!" });
+        Description = "Welcome to the marvellous Test1 API!"
+      });
     });
 
     //Automapper
     services.AddAutoMapper(cfg =>
     {
-      cfg.AddProfile(new SampleProfile());
+      cfg.AddProfile(new SamplesProfile());
+      cfg.AddProfile(new UsersProfile());
     });
 
     // Autofac
@@ -72,6 +94,10 @@ public class Startup
   // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
   public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
   {
+    //Log
+    loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+    loggerFactory.AddDebug();
+
     // only enable webpack building in Developement environment
     if (env.IsDevelopment())
     {
@@ -90,9 +116,6 @@ public class Startup
     }
 
     app.UseStaticFiles();
-
-    loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-    loggerFactory.AddDebug();
 
     app.UseMvc(routes =>
     {

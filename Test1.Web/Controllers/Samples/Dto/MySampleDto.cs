@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Test1.Web.Controllers.Sample.Dto
+namespace Test1.Web.Controllers.Samples.Dto
 {
   public class MySampleDto
   {

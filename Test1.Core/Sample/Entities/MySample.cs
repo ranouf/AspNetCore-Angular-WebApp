@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Test1.Core.Authentication.Entities;
 using Test1.Core.Common.Entities;
 
 namespace Test1.Core.Sample.Entities
@@ -10,8 +11,10 @@ namespace Test1.Core.Sample.Entities
   {
     [Required]
     public string Value { get; set; }
+    public Guid UserId { get; set; }
+    public virtual User User { get; set; } = new User();
 
-    protected MySample() { }
+    internal MySample() { }
 
     public MySample(string value)
     {

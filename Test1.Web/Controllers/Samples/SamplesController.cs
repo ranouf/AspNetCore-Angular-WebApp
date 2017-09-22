@@ -5,18 +5,18 @@ using Microsoft.AspNetCore.Mvc;
 using Test1.Core.Sample;
 using Test1.Core.Sample.Entities;
 using Microsoft.EntityFrameworkCore;
-using Test1.Web.Controllers.Sample.Dto;
+using Test1.Web.Controllers.Samples.Dto;
 using AutoMapper;
 using System.Net.Http;
 
-namespace Test1.Controllers.Sample
+namespace Test1.Controllers.Samples
 {
   [Route("api/v1/[controller]")]
-  public class SampleController : Controller
+  public class SamplesController : Controller
   {
     private SampleManager _sampleManager;
 
-    public SampleController(
+    public SamplesController(
       SampleManager sampleManager
     )
     {
