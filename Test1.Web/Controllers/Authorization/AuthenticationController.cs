@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Test1.Web.Controllers.Authentication.Dto;
-using System.Net.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Identity.Core;
 using Test1.Core.Authentication.Entities;
 using Test1.Web.Controllers.Users.Dto;
 using AutoMapper;

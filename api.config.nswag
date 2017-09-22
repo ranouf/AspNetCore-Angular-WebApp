@@ -43,8 +43,8 @@
       ],
       "controllerNames": [
         "Test1.Controllers.Samples.SamplesController",
-        "Test1.Web.Controllers.Authorization.AccountController",
-        "Test1.Web.Controllers.Authorization.AuthenticationController"
+        "Test1.Web.Controllers.Authorization.AuthenticationController",
+        "Test1.Web.Controllers.Authorization.AccountController"
       ],
       "isAspNetCore": true,
       "defaultUrlTemplate": "api/v1/{controller}/{id?}",

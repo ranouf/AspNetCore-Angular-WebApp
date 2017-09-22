@@ -1,12 +1,10 @@
-
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Test1.Core.Authentication.Entities;
 using Test1.Web.Controllers.Authentication.Dto;
+using Microsoft.Extensions.Identity.Core;
 
 namespace Test1.Web.Controllers.Authorization
 {

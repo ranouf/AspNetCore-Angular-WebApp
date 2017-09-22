@@ -39,7 +39,7 @@ export class ServiceBase {
 }
 
 @Injectable()
-export class SampleService extends ServiceBase {
+export class SamplesService extends ServiceBase {
     private http: Http;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -51,7 +51,7 @@ export class SampleService extends ServiceBase {
     }
 
     getSampleById(id: string): Observable<MySampleDto | null> {
-        let url_ = this.baseUrl + "/api/v1/Sample/{id}";
+        let url_ = this.baseUrl + "/api/v1/Samples/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -98,7 +98,7 @@ export class SampleService extends ServiceBase {
     }
 
     deleteSample(id: string): Observable<FileResponse | null> {
-        let url_ = this.baseUrl + "/api/v1/Sample/{id}";
+        let url_ = this.baseUrl + "/api/v1/Samples/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -147,7 +147,7 @@ export class SampleService extends ServiceBase {
     }
 
     getSamples(): Observable<MySampleDto[] | null> {
-        let url_ = this.baseUrl + "/api/v1/Sample";
+        let url_ = this.baseUrl + "/api/v1/Samples";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ = {
@@ -191,7 +191,7 @@ export class SampleService extends ServiceBase {
     }
 
     createSample(dto: MySampleDto | null): Observable<MySampleDto | null> {
-        let url_ = this.baseUrl + "/api/v1/Sample";
+        let url_ = this.baseUrl + "/api/v1/Samples";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(dto);
@@ -238,7 +238,7 @@ export class SampleService extends ServiceBase {
     }
 
     updateSample(dto: MySampleDto | null): Observable<MySampleDto | null> {
-        let url_ = this.baseUrl + "/api/v1/Sample";
+        let url_ = this.baseUrl + "/api/v1/Samples";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(dto);
