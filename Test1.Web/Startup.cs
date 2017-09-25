@@ -24,6 +24,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Test1.Web.Runtime;
+using Test1.Core.Runtime.Session;
+using Microsoft.AspNetCore.Http;
 
 public class Startup
 {
@@ -64,7 +66,6 @@ public class Startup
       .AddUserStore<UserStore<User, Role, AppDbContext, Guid>>()
       .AddRoleStore<RoleStore<Role, AppDbContext, Guid>>();
 
-
     // Add framework services.
     services.AddMvc();
 
@@ -86,6 +87,9 @@ public class Startup
     //Authentication
     AddJwtBearerAuthentication(services);
 
+    //HttpContext
+    services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
     //Automapper
     services.AddAutoMapper(cfg =>
     {
@@ -97,6 +101,7 @@ public class Startup
     var builder = new ContainerBuilder();
     builder.RegisterModule(new CoreModule());
     builder.RegisterModule(new InfrastructureModule());
+    builder.RegisterType<AppSession>().As<IAppSession>().InstancePerLifetimeScope();
     builder.Populate(services);
     ApplicationContainer = builder.Build();
 

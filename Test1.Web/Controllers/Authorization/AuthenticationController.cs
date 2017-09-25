@@ -10,19 +10,21 @@ using Test1.Web.Helpers;
 using Test1.Web.Controllers.Authorization.Dto;
 using Microsoft.AspNetCore.Authorization;
 using System.Net.Http;
+using Test1.Core.Runtime.Session;
 
 namespace Test1.Web.Controllers.Authorization
 {
   [Route("api/v1/[controller]")]
-  public class AuthenticationController : Controller
+  public class AuthenticationController : AuthentifiedBaseController
   {
     private UserManager<User> _userManager;
     private AuthenticationSettings _authSettings;
 
     public AuthenticationController(
       UserManager<User> userManager,
-      IOptions<AuthenticationSettings> authSettings
-    )
+      IOptions<AuthenticationSettings> authSettings,
+      IAppSession session
+    ) : base(session, userManager)
     {
       _userManager = userManager;
       _authSettings = authSettings.Value;
