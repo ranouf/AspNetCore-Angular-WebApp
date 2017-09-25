@@ -16,10 +16,13 @@ This project uses:
 - NswagStudio for Angular services from WebApi generation(`https://github.com/RSuter/NSwag`)
 - Log (`https://github.com/serilog/serilog`)
 
-## Documentation:
+## Sources:
 - Angular:
   * Routing: `https://angular.io/guide/router`
-- Asp.Net:
+- Asp.Net Core:
   * Identity: 
       > `https://fullstackmark.com/post/10/user-authentication-with-angular-and-asp-net-core`
+      > `https://www.pointblankdevelopment.com.au/blog/113/aspnet-core-angular-24-user-registration-and-login-tutorial-example#app-settings-json`
       > `https://stackoverflow.com/a/37173202/6123422`
+  * Swagger UI:
+      > `http://blog.sluijsveld.com/28/01/2016/CustomSwaggerUIField/`

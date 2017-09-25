@@ -19,6 +19,11 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Serilog;
 using Test1.Web.Controllers.Users;
+using Test1.Core.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using Test1.Web.Runtime;
 
 public class Startup
 {
@@ -49,15 +54,15 @@ public class Startup
   {
     //DataBase
     services.AddDbContext<AppDbContext>(options =>
-        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+      options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
     );
 
     //Identity
     services.AddIdentity<User, Role>()
-            .AddEntityFrameworkStores<AppDbContext>()
-            .AddDefaultTokenProviders()
-            .AddUserStore<UserStore<User, Role, AppDbContext, Guid>>()
-            .AddRoleStore<RoleStore<Role, AppDbContext, Guid>>();
+      .AddEntityFrameworkStores<AppDbContext>()
+      .AddDefaultTokenProviders()
+      .AddUserStore<UserStore<User, Role, AppDbContext, Guid>>()
+      .AddRoleStore<RoleStore<Role, AppDbContext, Guid>>();
 
 
     // Add framework services.
@@ -72,7 +77,14 @@ public class Startup
         Version = "v1",
         Description = "Welcome to the marvellous Test1 API!"
       });
+      c.OperationFilter<AuthorizationHeaderParameterOperationFilter>();
     });
+
+    //App settings
+    services.Configure<AuthenticationSettings>(Configuration.GetSection("Authentication"));
+
+    //Authentication
+    AddJwtBearerAuthentication(services);
 
     //Automapper
     services.AddAutoMapper(cfg =>
@@ -114,6 +126,7 @@ public class Startup
         HotModuleReplacement = true
       });
     }
+    app.UseAuthentication();
 
     app.UseStaticFiles();
 
@@ -122,10 +135,44 @@ public class Startup
       routes.MapRoute(
           name: "default",
           template: "api/{controller}/{id?}");
-      // add a special route for our index page
-      routes.MapSpaFallbackRoute(
-          name: "spa-fallback",
-          defaults: new { controller = "Home", action = "index" });
+        // add a special route for our index page
+        routes.MapSpaFallbackRoute(
+              name: "spa-fallback",
+              defaults: new { controller = "Home", action = "index" });
     });
+  }
+
+  public void AddJwtBearerAuthentication (IServiceCollection services)
+  {
+    var tokenValidationParameters = new TokenValidationParameters
+    {
+      ValidateIssuerSigningKey = true,
+      IssuerSigningKey = GetSignInKey(),
+      ValidateIssuer = true,
+      ValidIssuer = Configuration["Authentication:Issuer"],
+      ValidateAudience = true,
+      ValidAudience = Configuration["Authentication:Audience"],
+      ValidateLifetime = true,
+      ClockSkew = TimeSpan.Zero,
+      RequireExpirationTime = true
+    };
+
+    services.AddAuthentication(options =>
+    {
+      options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+      options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(o =>
+    {
+      o.TokenValidationParameters = tokenValidationParameters;
+      o.RequireHttpsMetadata = false;
+      o.SaveToken = true;
+    });
+
+    SecurityKey GetSignInKey()
+    {
+      var key = Encoding.ASCII.GetBytes(Configuration["Authentication:SecretKey"]);
+      return new SymmetricSecurityKey(key);
+    }
   }
 }

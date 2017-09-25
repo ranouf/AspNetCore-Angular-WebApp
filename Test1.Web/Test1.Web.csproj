@@ -3,6 +3,7 @@
 		<TargetFramework>netcoreapp2.0</TargetFramework>
 		<TypeScriptToolsVersion>latest</TypeScriptToolsVersion>
 		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+		<PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
 		<UserSecretsId>7f5d01ca-0ff7-4b09-a5c3-c8265bfb4e8d</UserSecretsId>
 	</PropertyGroup>
 	<ItemGroup>

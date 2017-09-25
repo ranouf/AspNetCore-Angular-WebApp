@@ -2,10 +2,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Test1.Web.Controllers.Authentication.Dto;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Identity.Core;
 using Test1.Core.Authentication.Entities;
-using Test1.Web.Controllers.Users.Dto;
 using AutoMapper;
+using Microsoft.Extensions.Options;
+using Test1.Core.Configuration;
+using Test1.Web.Helpers;
+using Test1.Web.Controllers.Authorization.Dto;
+using Microsoft.AspNetCore.Authorization;
+using System.Net.Http;
 
 namespace Test1.Web.Controllers.Authorization
 {
@@ -13,17 +17,20 @@ namespace Test1.Web.Controllers.Authorization
   public class AuthenticationController : Controller
   {
     private UserManager<User> _userManager;
+    private AuthenticationSettings _authSettings;
 
     public AuthenticationController(
-      UserManager<User> userManager
+      UserManager<User> userManager,
+      IOptions<AuthenticationSettings> authSettings
     )
     {
       _userManager = userManager;
+      _authSettings = authSettings.Value;
     }
 
     // POST api/values
     [HttpPost]
-    [ProducesResponseType(typeof(UserDto), 200)]
+    [ProducesResponseType(typeof(string), 200)]
     public async Task<IActionResult> Login([FromBody]CredentialsDto dto)
     {
       if (!ModelState.IsValid)
@@ -31,18 +38,27 @@ namespace Test1.Web.Controllers.Authorization
         return BadRequest(ModelState);
       }
 
-      // get the user to verifty
+      // is the user authorized
       var user = await _userManager.FindByEmailAsync(dto.Email);
-      if (user == null)
+      if (user == null || !await _userManager.CheckPasswordAsync(user, dto.Password))
       {
-        return BadRequest();
-      }
-      if (!await _userManager.CheckPasswordAsync(user, dto.Password))
-      {
-        return BadRequest();
+        return Unauthorized();
       }
 
-      return Ok(Mapper.Map<User, UserDto>(user));
+      var token = TokenHelper.GenerateToken(_authSettings, user);
+
+      return Ok(Mapper.Map<User, UserAuthenticationDto>(
+        user,
+        opt => opt.AfterMap((src, dest) => dest.Token = token))
+      );
+    }
+
+    [HttpPut]
+    [Authorize]
+    [ProducesResponseType(typeof(HttpResponseMessage), 200)]
+    public IActionResult Test()
+    {
+      return Ok();
     }
   }
 }

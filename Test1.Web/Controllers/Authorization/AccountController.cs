@@ -40,7 +40,7 @@ namespace Test1.Web.Controllers.Authorization
 
       if (!result.Succeeded)
       {
-        return BadRequest();
+        return BadRequest(); //TODO Send more details
       }
 
       return Ok();

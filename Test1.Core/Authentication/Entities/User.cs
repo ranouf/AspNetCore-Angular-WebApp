@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using Test1.Core.Common.Entities;
 using Test1.Core.Sample.Entities;
 
