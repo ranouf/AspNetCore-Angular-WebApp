@@ -32,7 +32,7 @@ namespace Test1.Web.Controllers.Authorization
 
     // POST api/values
     [HttpPost]
-    [ProducesResponseType(typeof(string), 200)]
+    [ProducesResponseType(typeof(UserAuthenticationDto), 200)]
     public async Task<IActionResult> Login([FromBody]CredentialsDto dto)
     {
       if (!ModelState.IsValid)
@@ -51,8 +51,14 @@ namespace Test1.Web.Controllers.Authorization
 
       return Ok(Mapper.Map<User, UserAuthenticationDto>(
         user,
-        opt => opt.AfterMap((src, dest) => dest.Token = token))
+        opt => opt.AfterMap((src, dest) => AfterMapConversion(dest)))
       );
+
+      UserAuthenticationDto AfterMapConversion(UserAuthenticationDto dest){
+        dest.Token = token.TokenId;
+        dest.ExpirationDate = token.ExpirationDate;
+        return dest;
+      }
     }
 
     [HttpPut]

@@ -15,8 +15,9 @@ namespace Test1.Web.Controllers
     {
       get
       {
-        if (_currentUser == null){
-          _currentUser = _userManager.FindByIdAsync(_session.UserId).Result;
+        if (_currentUser == null && _session.UserId.HasValue)
+        {
+          _currentUser = _userManager.FindByIdAsync(_session.UserId.Value).Result;
         }
         return _currentUser;
       }

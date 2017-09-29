@@ -12,9 +12,9 @@ namespace Test1.Web.Controllers.Users.Dto
     [Required]
     public string Email { get; set; }
     [Required]
-    public string FirstName { get; set; }
+    public string Firstname { get; set; }
     [Required]
-    public string LastName { get; set; }
+    public string Lastname { get; set; }
 
   }
 }

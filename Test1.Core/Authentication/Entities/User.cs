@@ -10,19 +10,19 @@ namespace Test1.Core.Authentication.Entities
   public class User : IdentityUser<Guid>, IEntity
   {
     [Required]
-    public string FirstName { get; set; }
+    public string Firstname { get; set; }
     [Required]
-    public string LastName { get; set; }
+    public string Lastname { get; set; }
     public virtual ICollection<MySample> Samples { get; set; } = new List<MySample>();
 
     internal User() { }
 
-    public User(string email, string firstName, string lastName)
+    public User(string email, string firstname, string lastname)
     {
       UserName = email;
       Email = email;
-      FirstName = firstName;
-      LastName = lastName;
+      Firstname = firstname;
+      Lastname = lastname;
     }
   }
 }

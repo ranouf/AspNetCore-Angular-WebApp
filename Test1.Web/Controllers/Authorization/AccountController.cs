@@ -32,8 +32,8 @@ namespace Test1.Web.Controllers.Authorization
 
       var userToRegister = new User(
         dto.Email,
-        dto.FirstName,
-        dto.LastName
+        dto.Firstname,
+        dto.Lastname
       );
 
       var result = await _userManager.CreateAsync(userToRegister, dto.Password);

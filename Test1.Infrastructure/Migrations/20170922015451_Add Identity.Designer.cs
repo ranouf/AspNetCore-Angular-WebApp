@@ -141,10 +141,10 @@ namespace Test1.Infrastructure.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("Firstname")
                         .IsRequired();
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("Lastname")
                         .IsRequired();
 
                     b.Property<bool>("LockoutEnabled");

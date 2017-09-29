@@ -18,8 +18,8 @@ namespace Test1.Web.Controllers.Authentication.Dto
     [Compare("Password")]
     public string PasswordConfirmation { get; set; }
     [Required]
-    public string FirstName { get; set; }
+    public string Firstname { get; set; }
     [Required]
-    public string LastName { get; set; }
+    public string Lastname { get; set; }
   }
 }
