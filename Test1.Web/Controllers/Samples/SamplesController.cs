@@ -5,20 +5,23 @@ using Microsoft.AspNetCore.Mvc;
 using Test1.Core.Sample;
 using Test1.Core.Sample.Entities;
 using Microsoft.EntityFrameworkCore;
-using Test1.Web.Controllers.Sample.Dto;
+using Test1.Web.Controllers.Samples.Dto;
 using AutoMapper;
 using System.Net.Http;
+using Test1.Web.Controllers;
+using Test1.Core.Runtime.Session;
 
-namespace Test1.Controllers.Sample
+namespace Test1.Controllers.Samples
 {
   [Route("api/v1/[controller]")]
-  public class SampleController : Controller
+  public class SamplesController : BaseController
   {
     private SampleManager _sampleManager;
 
-    public SampleController(
+    public SamplesController(
+      [FromServices]IAppSession session,
       SampleManager sampleManager
-    )
+    ) : base()
     {
       _sampleManager = sampleManager;
     }
@@ -52,7 +55,8 @@ namespace Test1.Controllers.Sample
     [ProducesResponseType(typeof(MySampleDto), 200)]
     public async Task<IActionResult> CreateSample([FromBody]MySampleDto dto)
     {
-      if (!(ModelState.IsValid)){
+      if (!(ModelState.IsValid))
+      {
         return BadRequest(ModelState);
       }
 

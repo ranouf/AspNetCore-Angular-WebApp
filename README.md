@@ -14,7 +14,17 @@ This project uses:
 - Swagger-UI (`https://github.com/domaindrivendev/Swashbuckle.AspNetCore`)
 - AutoMapper (`https://github.com/AutoMapper/AutoMapper`)
 - NswagStudio for Angular services from WebApi generation(`https://github.com/RSuter/NSwag`)
+- Log (`https://github.com/serilog/serilog`)
 
-## Documentation:
+## Sources:
 - Angular:
-  * Routing: https://angular.io/guide/router
+  * Routing: `https://angular.io/guide/router`
+- Asp.Net Core:
+  * Identity: 
+      > `https://fullstackmark.com/post/10/user-authentication-with-angular-and-asp-net-core`
+      > `https://www.pointblankdevelopment.com.au/blog/113/aspnet-core-angular-24-user-registration-and-login-tutorial-example#app-settings-json`
+      > `https://stackoverflow.com/a/37173202/6123422`
+  * Swagger UI:
+      > `http://blog.sluijsveld.com/28/01/2016/CustomSwaggerUIField/`
+  * Exception Filter (SOON):
+      > `https://weblog.west-wind.com/posts/2016/Oct/16/Error-Handling-and-ExceptionFilter-Dependency-Injection-for-ASPNET-Core-APIs`

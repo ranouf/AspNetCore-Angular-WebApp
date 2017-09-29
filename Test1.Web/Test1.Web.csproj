@@ -3,6 +3,7 @@
 		<TargetFramework>netcoreapp2.0</TargetFramework>
 		<TypeScriptToolsVersion>latest</TypeScriptToolsVersion>
 		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+		<PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
 		<UserSecretsId>7f5d01ca-0ff7-4b09-a5c3-c8265bfb4e8d</UserSecretsId>
 	</PropertyGroup>
 	<ItemGroup>
@@ -15,11 +16,19 @@
 		<PackageReference Include="AutoMapper" Version="6.1.1" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Identity.Core" Version="2.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="2.0.0" />
+		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.1.4" />
+		<PackageReference Include="Serilog" Version="2.5.0" />
+		<PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="1.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="1.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="1.0.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.1.4" />
 	</ItemGroup>
 	<ItemGroup>
 		<DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />

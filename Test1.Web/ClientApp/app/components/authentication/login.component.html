@@ -1,0 +1,32 @@
+<h1>Login</h1>
+<form #featureForm="ngForm" (ngSubmit)="submit()">
+  <md-card-content>
+    <div layout="row" id="email">
+      <md-input-container flex>
+        <input mdInput
+               type="text"
+               placeholder="Email"
+               [(ngModel)]="credentials.email"
+               name="email"
+               maxlength="150"
+               required />
+      </md-input-container>
+    </div>
+    <div layout="row" id="password">
+      <md-input-container flex>
+        <input mdInput
+               type="password"
+               placeholder="Password"
+               [(ngModel)]="credentials.password"
+               name="password"
+               maxlength="150"
+               required />
+      </md-input-container>
+    </div>
+</md-card-content>
+  <md-divider></md-divider>
+  <md-card-actions>
+    <button type="submit" md-button [disabled]="!(featureForm.valid)" color="primary">LOGIN</button>
+    <button type="button" md-button (click)="cancel()">CANCEL</button>
+  </md-card-actions>
+</form>

@@ -1,49 +1,14 @@
 ﻿{
+  "runtime": "NetCore20",
   "swaggerGenerator": {
     "webApiToSwagger": {
-      "settings": {
-        "assemblySettings": {
-          "assemblyPaths": [
-            "C:\\Users\\SideKick\\Documents\\Visual Studio 2017\\Projects\\tests\\Test1\\Test1.Web\\bin\\Debug\\netcoreapp2.0\\Test1.Web.dll"
-          ],
-          "referencePaths": [
-            "C:/Program Files/dotnet/shared/Microsoft.NETCore.App/2.0.0",
-            "C:\\Users\\SideKick\\Documents\\Visual Studio 2017\\Projects\\tests\\Test1\\Test1.Web\\bin\\Release\\PublishOutput",
-            "C:\\Users\\SideKick\\.nuget\\packages"
-          ]
-        },
-        "defaultUrlTemplate": "api/v1/{controller}/{id?}",
-        "title": "Web API Swagger specification",
-        "version": "1.0.0",
-        "isAspNetCore": true,
-        "addMissingPathParameters": false,
-        "defaultEnumHandling": "Integer",
-        "defaultReferenceTypeNullHandling": "Null",
-        "defaultPropertyNameHandling": "CamelCase",
-        "generateAbstractProperties": false,
-        "flattenInheritanceHierarchy": false,
-        "generateKnownTypes": true,
-        "generateXmlObjects": false,
-        "ignoreObsoleteProperties": false,
-        "schemaType": "Swagger2",
-        "actualContractResolver": {
-          "dynamicCodeGeneration": true,
-          "defaultMembersSearchFlags": "Instance, Public",
-          "serializeCompilerGeneratedMembers": false,
-          "ignoreSerializableInterface": false,
-          "ignoreSerializableAttribute": true,
-          "namingStrategy": {
-            "processDictionaryKeys": true,
-            "overrideSpecifiedNames": true
-          }
-        }
-      },
       "assemblyPaths": [
         "C:\\Users\\SideKick\\Documents\\Visual Studio 2017\\Projects\\tests\\Test1\\Test1.Web\\bin\\Debug\\netcoreapp2.0\\Test1.Web.dll"
       ],
       "controllerNames": [
-        "Test1.Controllers.Sample.SampleController",
-        "Test1.Controllers.Test.TestController"
+        "Test1.Controllers.Samples.SamplesController",
+        "Test1.Web.Controllers.Authorization.AccountController",
+        "Test1.Web.Controllers.Authorization.AuthenticationController"
       ],
       "isAspNetCore": true,
       "defaultUrlTemplate": "api/v1/{controller}/{id?}",
@@ -59,7 +24,7 @@
       "infoTitle": "Web API Swagger specification",
       "infoVersion": "1.0.0",
       "referencePaths": [
-        "C:/Program Files/dotnet/shared/Microsoft.NETCore.App/2.0.0",
+        "C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App\\2.0.0",
         "C:\\Users\\SideKick\\Documents\\Visual Studio 2017\\Projects\\tests\\Test1\\Test1.Web\\bin\\Release\\PublishOutput",
         "C:\\Users\\SideKick\\.nuget\\packages"
       ],
@@ -102,6 +67,5 @@
       "serviceHost": "",
       "output": "C:\\Users\\SideKick\\Documents\\Visual Studio 2017\\Projects\\tests\\Test1\\Test1.Web\\ClientApp\\app\\services\\api.services.ts"
     }
-  },
-  "runtime": "NetCore20"
+  }
 }
