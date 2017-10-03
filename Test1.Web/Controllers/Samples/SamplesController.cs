@@ -94,7 +94,8 @@ namespace Test1.Controllers.Samples
 
     // DEL
     [HttpDelete]
-    [ProducesResponseType(typeof(void), 200)]
+    [ProducesResponseType(typeof(OkResult), 200)]
+    [ProducesResponseType(typeof(NotFoundResult), 404)]
     [Route("{id:guid}")]
     public async Task<IActionResult> DeleteSample([FromRoute]Guid id)
     {

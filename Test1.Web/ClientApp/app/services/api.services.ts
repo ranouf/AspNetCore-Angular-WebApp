@@ -108,7 +108,7 @@ export class SamplesService extends ServiceBase {
         return Observable.of<MySampleDto | null>(<any>null);
     }
 
-    deleteSample(id: string): Observable<void> {
+    deleteSample(id: string): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/api/v1/Samples/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -117,8 +117,10 @@ export class SamplesService extends ServiceBase {
 
         let options_ = {
             method: "delete",
+            responseType: ResponseContentType.Blob,
             headers: new Headers({
                 "Content-Type": "application/json", 
+                "Accept": "application/json"
             })
         };
 
@@ -131,25 +133,33 @@ export class SamplesService extends ServiceBase {
                 try {
                     return this.transformResult(url_, response_, (r) => this.processDeleteSample(r));
                 } catch (e) {
-                    return <Observable<void>><any>Observable.throw(e);
+                    return <Observable<FileResponse | null>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<void>><any>Observable.throw(response_);
+                return <Observable<FileResponse | null>><any>Observable.throw(response_);
         });
     }
 
-    protected processDeleteSample(response: Response): Observable<void> {
+    protected processDeleteSample(response: Response): Observable<FileResponse | null> {
         const status = response.status; 
 
         let _headers: any = response.headers ? response.headers.toJSON() : {};
-        if (status === 200) {
-            const _responseText = response.text();
-            return Observable.of<void>(<any>null);
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*)"?;/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return Observable.of({ fileName: fileName, data: response.blob(), status: status, headers: _headers });
+        } else if (status === 404) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*)"?;/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return Observable.of({ fileName: fileName, data: response.blob(), status: status, headers: _headers });
         } else if (status !== 200 && status !== 204) {
-            const _responseText = response.text();
+            return blobToText(response.blob()).flatMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
         }
-        return Observable.of<void>(<any>null);
+        return Observable.of<FileResponse | null>(<any>null);
     }
 
     getSamples(): Observable<MySampleDto[] | null> {
@@ -303,7 +313,7 @@ export class AccountService extends ServiceBase {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    register(dto: RegistrationDto | null): Observable<void> {
+    register(dto: RegistrationDto | null): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/api/v1/Account";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -312,8 +322,10 @@ export class AccountService extends ServiceBase {
         let options_ = {
             body: content_,
             method: "post",
+            responseType: ResponseContentType.Blob,
             headers: new Headers({
                 "Content-Type": "application/json", 
+                "Accept": "application/json"
             })
         };
 
@@ -326,25 +338,34 @@ export class AccountService extends ServiceBase {
                 try {
                     return this.transformResult(url_, response_, (r) => this.processRegister(r));
                 } catch (e) {
-                    return <Observable<void>><any>Observable.throw(e);
+                    return <Observable<FileResponse | null>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<void>><any>Observable.throw(response_);
+                return <Observable<FileResponse | null>><any>Observable.throw(response_);
         });
     }
 
-    protected processRegister(response: Response): Observable<void> {
+    protected processRegister(response: Response): Observable<FileResponse | null> {
         const status = response.status; 
 
         let _headers: any = response.headers ? response.headers.toJSON() : {};
-        if (status === 200) {
-            const _responseText = response.text();
-            return Observable.of<void>(<any>null);
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*)"?;/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return Observable.of({ fileName: fileName, data: response.blob(), status: status, headers: _headers });
+        } else if (status === 500) {
+            return blobToText(response.blob()).flatMap(_responseText => {
+            let result500: any = null;
+            result500 = _responseText === "" ? null : <ApiException>JSON.parse(_responseText, this.jsonParseReviver);
+            return throwException("A server error occurred.", status, _responseText, _headers, result500);
+            });
         } else if (status !== 200 && status !== 204) {
-            const _responseText = response.text();
+            return blobToText(response.blob()).flatMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
         }
-        return Observable.of<void>(<any>null);
+        return Observable.of<FileResponse | null>(<any>null);
     }
 }
 
@@ -407,14 +428,16 @@ export class AuthenticationService extends ServiceBase {
         return Observable.of<UserAuthenticationDto | null>(<any>null);
     }
 
-    test(): Observable<void> {
+    test(): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/api/v1/Authentication";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ = {
             method: "put",
+            responseType: ResponseContentType.Blob,
             headers: new Headers({
                 "Content-Type": "application/json", 
+                "Accept": "application/json"
             })
         };
 
@@ -427,25 +450,28 @@ export class AuthenticationService extends ServiceBase {
                 try {
                     return this.transformResult(url_, response_, (r) => this.processTest(r));
                 } catch (e) {
-                    return <Observable<void>><any>Observable.throw(e);
+                    return <Observable<FileResponse | null>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<void>><any>Observable.throw(response_);
+                return <Observable<FileResponse | null>><any>Observable.throw(response_);
         });
     }
 
-    protected processTest(response: Response): Observable<void> {
+    protected processTest(response: Response): Observable<FileResponse | null> {
         const status = response.status; 
 
         let _headers: any = response.headers ? response.headers.toJSON() : {};
-        if (status === 200) {
-            const _responseText = response.text();
-            return Observable.of<void>(<any>null);
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*)"?;/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return Observable.of({ fileName: fileName, data: response.blob(), status: status, headers: _headers });
         } else if (status !== 200 && status !== 204) {
-            const _responseText = response.text();
+            return blobToText(response.blob()).flatMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
         }
-        return Observable.of<void>(<any>null);
+        return Observable.of<FileResponse | null>(<any>null);
     }
 }
 
@@ -462,6 +488,17 @@ export interface RegistrationDto {
     lastname: string;
 }
 
+export interface Exception {
+    message?: string | undefined;
+    innerException?: Exception | undefined;
+    stackTrace?: string | undefined;
+    source?: string | undefined;
+}
+
+export interface ApiException extends Exception {
+    statusCode: number;
+}
+
 export interface CredentialsDto {
     email: string;
     password: string;
@@ -472,6 +509,13 @@ export interface UserAuthenticationDto {
     lastname?: string | undefined;
     expirationDate: Date;
     token?: string | undefined;
+}
+
+export interface FileResponse {
+    data: Blob;
+	status: number;
+    fileName?: string;
+	headers?: { [name: string]: any };
 }
 
 export class SwaggerException extends Error {
