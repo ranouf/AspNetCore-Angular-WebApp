@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, ChangeDetectorRef, HostBinding } from '@angular/core';
 import { slideInDownAnimation }   from './../../animations';
 import { RegistrationDto, AccountService } from './../../services/api.services';
+import { Router } from '@angular/router';
 import { ErrorInfo } from './../../common/errorInfo';
 
 @Component({
@@ -16,6 +17,7 @@ export class RegisterComponent implements OnInit {
 
 	constructor(
 		private accountService: AccountService,
+		private router: Router, 
 		private _changeDetectionRef: ChangeDetectorRef,
   ) {
 	}
@@ -23,7 +25,7 @@ export class RegisterComponent implements OnInit {
 	submit() {
 		this.accountService.register(this.registration)
 			.subscribe(result => {
-        debugger;
+				this.router.navigate(['/login']);
 			}, error => {
 				this.error = error;
 				console.log('Error - AuthenticationService.register: ' + error);

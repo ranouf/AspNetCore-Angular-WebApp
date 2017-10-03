@@ -23,6 +23,7 @@
                required />
       </md-input-container>
     </div>
+    <td-message label="Error!" [sublabel]="error.message" color="warn" icon="error" *ngIf="error"></td-message>
   </md-card-content>
   <md-divider></md-divider>
   <md-card-actions>

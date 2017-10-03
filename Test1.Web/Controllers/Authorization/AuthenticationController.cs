@@ -63,7 +63,7 @@ namespace Test1.Web.Controllers.Authorization
 
     [HttpPut]
     [Authorize]
-    [ProducesResponseType(typeof(OkResult), 200)]
+    [ProducesResponseType(typeof(object), 200)]
     public IActionResult Test()
     {
       return Ok();

@@ -24,8 +24,7 @@ namespace Test1.Web.Controllers.Authorization
 
     // POST api/values
     [HttpPost]
-    [ProducesResponseType(typeof(OkResult), 200)]
-    [ProducesResponseType(typeof(ApiException), 500)]
+    [ProducesResponseType(typeof(object), 200)]
     public async Task<IActionResult> Register([FromBody]RegistrationDto dto)
     {
       if (!ModelState.IsValid)
