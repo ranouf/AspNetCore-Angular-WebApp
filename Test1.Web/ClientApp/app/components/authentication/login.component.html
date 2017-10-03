@@ -1,5 +1,5 @@
 <h1>Login</h1>
-<form #featureForm="ngForm" (ngSubmit)="submit()">
+<form #loginForm="ngForm" (ngSubmit)="submit()">
   <md-card-content>
     <div layout="row" id="email">
       <md-input-container flex>
@@ -23,10 +23,11 @@
                required />
       </md-input-container>
     </div>
-</md-card-content>
+    <td-message label="Error!" [sublabel]="error.message" color="warn" icon="error" *ngIf="error"></td-message>
+  </md-card-content>
   <md-divider></md-divider>
   <md-card-actions>
-    <button type="submit" md-button [disabled]="!(featureForm.valid)" color="primary">LOGIN</button>
+    <button type="submit" md-button [disabled]="!(loginForm.valid)" color="primary">LOGIN</button>
     <button type="button" md-button (click)="cancel()">CANCEL</button>
   </md-card-actions>
 </form>

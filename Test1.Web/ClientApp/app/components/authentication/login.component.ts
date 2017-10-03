@@ -3,6 +3,7 @@ import { slideInDownAnimation } from './../../animations';
 import { CredentialsDto } from './../../services/api.services';
 import { AuthService } from './../../services/auth.service';
 import { Router, NavigationExtras } from '@angular/router';
+import { ErrorInfo } from './../../common/errorInfo';
 
 @Component({
 	selector: 'login',
@@ -12,6 +13,7 @@ import { Router, NavigationExtras } from '@angular/router';
 export class LoginComponent implements OnInit {
 	@HostBinding('@routeAnimation') routeAnimation = true;
 	public credentials: CredentialsDto = <CredentialsDto>{};
+	private error: ErrorInfo;
 
 	constructor(
 		private _authService: AuthService,
@@ -37,6 +39,7 @@ export class LoginComponent implements OnInit {
 				// Redirect the user
 				this.router.navigate([redirect], navigationExtras);
 			}, error => {
+				this.error = error;
 				console.log('Error - AuthenticationService.login: ' + error);
 			});
 	}

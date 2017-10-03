@@ -26,6 +26,7 @@ using System.Text;
 using Test1.Web.Runtime;
 using Test1.Core.Runtime.Session;
 using Microsoft.AspNetCore.Http;
+using Test1.Web.Common.Filters;
 
 public class Startup
 {
@@ -67,7 +68,10 @@ public class Startup
       .AddRoleStore<RoleStore<Role, AppDbContext, Guid>>();
 
     // Add framework services.
-    services.AddMvc();
+    services.AddMvc(options =>
+    {
+      options.Filters.AddService(typeof(ApiExceptionFilter));
+    });
 
     //Swagger-ui 
     services.AddSwaggerGen(c =>
@@ -102,6 +106,7 @@ public class Startup
     builder.RegisterModule(new CoreModule());
     builder.RegisterModule(new InfrastructureModule());
     builder.RegisterType<AppSession>().As<IAppSession>().InstancePerLifetimeScope();
+    builder.RegisterType<ApiExceptionFilter>();
     builder.Populate(services);
     ApplicationContainer = builder.Build();
 

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Test1.Core.Authentication.Entities;
 using Test1.Web.Controllers.Authentication.Dto;
 using Microsoft.Extensions.Identity.Core;
+using Test1.Web.Common.Exceptions;
+using System.Linq;
 
 namespace Test1.Web.Controllers.Authorization
 {
@@ -22,7 +24,7 @@ namespace Test1.Web.Controllers.Authorization
 
     // POST api/values
     [HttpPost]
-    [ProducesResponseType(typeof(HttpResponseMessage), 200)]
+    [ProducesResponseType(typeof(object), 200)]
     public async Task<IActionResult> Register([FromBody]RegistrationDto dto)
     {
       if (!ModelState.IsValid)
@@ -40,7 +42,7 @@ namespace Test1.Web.Controllers.Authorization
 
       if (!result.Succeeded)
       {
-        return BadRequest(); //TODO Send more details
+        throw new ApiException(result.Errors.First().Description);
       }
 
       return Ok();

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace Test1.Web.Runtime
+namespace Test1.Web.Common.Filters
 {
   public class AuthorizationHeaderParameterOperationFilter : IOperationFilter
   {
