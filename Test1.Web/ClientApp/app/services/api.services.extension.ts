@@ -19,7 +19,7 @@ export class ServiceBase {
 
 	protected transformResult(url: string, response: Response, processor: (response: Response) => any): any {
 		if (response.status !== 200 && response.status !== 204) {
-			var err = new ErrorInfo().parseObservableResponseError(response);
+			var err = new ErrorInfo().parseResponseError(response);
 			throw err;
 		}
 		else {

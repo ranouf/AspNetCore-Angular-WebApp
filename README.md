@@ -26,5 +26,5 @@ This project uses:
       > `https://stackoverflow.com/a/37173202/6123422`
   * Swagger UI:
       > `http://blog.sluijsveld.com/28/01/2016/CustomSwaggerUIField/`
-  * Exception Filter (SOON):
+  * Exception Filter:
       > `https://weblog.west-wind.com/posts/2016/Oct/16/Error-Handling-and-ExceptionFilter-Dependency-Injection-for-ASPNET-Core-APIs`
