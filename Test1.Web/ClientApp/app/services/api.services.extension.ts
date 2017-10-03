@@ -1,4 +1,5 @@
 import * as generated from "./api.services";
+import { ErrorInfo } from "./../common/errorInfo";
 
 export class ServiceBase {
 
@@ -16,9 +17,10 @@ export class ServiceBase {
 		return Promise.resolve(options);
 	}
 
-	protected transformResult(url: string, response: any, processor: (response: any) => any) {
+	protected transformResult(url: string, response: Response, processor: (response: Response) => any): any {
 		if (response.status !== 200 && response.status !== 204) {
-			throw new Error(response);
+			var err = new ErrorInfo().parseObservableResponseError(response);
+			throw err;
 		}
 		else {
 			return processor(response);
