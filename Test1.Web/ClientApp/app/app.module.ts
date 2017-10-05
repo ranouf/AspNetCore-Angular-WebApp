@@ -6,9 +6,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { Router } from '@angular/router';
 
+import * as _fromAngularMaterial from '@angular/material';
+import * as _fromCovalent from '@covalent/core';
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { RootComponent } from './components/root/root.component';
 import { AuthenticationModule } from './components/authentication/authentication.module';
 import { AuthenticationService } from './services/api.services';
 import { AuthService } from './services/auth.service';
@@ -22,6 +26,30 @@ import { SamplesModule } from './components/samples/samples.module';
 		HttpModule,
 		BrowserAnimationsModule,
 
+		//Angular Material
+		_fromAngularMaterial.MaterialModule,
+		_fromAngularMaterial.MdDatepickerModule,
+		_fromAngularMaterial.MdNativeDateModule,
+		_fromAngularMaterial.MdCoreModule,
+		_fromAngularMaterial.MdSnackBarModule,
+		_fromAngularMaterial.MdNativeDateModule,
+		_fromAngularMaterial.MdDatepickerModule,
+		//_fromAngularMaterial.MatCommonModule,,
+   // _fromAngularMaterial.MaterialModule,
+
+	//Covalent
+	_fromCovalent.CovalentLayoutModule,
+	_fromCovalent.CovalentStepsModule,
+	_fromCovalent.CovalentMediaModule,
+	_fromCovalent.CovalentLoadingModule,
+	_fromCovalent.CovalentNotificationsModule,
+	_fromCovalent.CovalentMenuModule,
+	_fromCovalent.CovalentDialogsModule,
+	_fromCovalent.CovalentSearchModule,
+	_fromCovalent.CovalentPagingModule,
+	_fromCovalent.CovalentFileModule,
+	_fromCovalent.CovalentCommonModule,
+
 		//Test1
 		AppRoutingModule,
 		AuthenticationModule,
@@ -29,7 +57,8 @@ import { SamplesModule } from './components/samples/samples.module';
 		SamplesModule,
 	],
 	declarations: [
-		AppComponent
+		AppComponent,
+    RootComponent,
 	],
 	providers: [
 		AuthenticationService,

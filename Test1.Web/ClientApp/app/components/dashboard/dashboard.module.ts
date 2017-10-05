@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MdInputModule, MdCardModule, MdButtonModule } from '@angular/material';
-import { CovalentLayoutModule, CovalentMessageModule, CovalentSearchModule } from '@covalent/core';
-
+import { CovalentLayoutModule, CovalentMessageModule, CovalentSearchModule, CovalentMediaModule } from '@covalent/core';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
@@ -16,6 +15,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 		CovalentLayoutModule,
 		CovalentMessageModule,
 		CovalentSearchModule,
+    CovalentMediaModule,
 		DashboardRoutingModule
 	],
 	declarations: [
