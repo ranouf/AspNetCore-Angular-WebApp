@@ -21,6 +21,12 @@
       "prefix": "app",
       "styles": [
         "styles.scss",
+        "../node_modules/@covalent/core/common/platform.scss",
+        "../node_modules/@covalent/core/common/platform.scss",
+        "../node_modules/@covalent/core/common/platform.scss",
+        "../node_modules/@covalent/core/common/platform.scss",
+        "../node_modules/@covalent/core/common/platform.scss",
+        "../node_modules/@covalent/core/common/platform.scss",
         "../node_modules/@covalent/core/common/platform.scss"
       ],
       "scripts": [],
