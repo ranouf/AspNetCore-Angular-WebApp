@@ -1,66 +1,66 @@
 <h1>Register</h1>
 <form #registrationForm="ngForm" (ngSubmit)="submit()">
-  <md-card-content>
+  <mat-card-content>
     <div layout="row" id="firstname">
-      <md-input-container flex>
-        <input mdInput
+      <mat-input-container flex>
+        <input matInput
                type="text"
                placeholder="Firstname"
                [(ngModel)]="registration.firstname"
                name="firstname"
                maxlength="150"
                required />
-      </md-input-container>
+      </mat-input-container>
     </div>
     <div layout="row" id="lastname">
-      <md-input-container flex>
-        <input mdInput
+      <mat-input-container flex>
+        <input matInput
                type="text"
                placeholder="Lastname"
                [(ngModel)]="registration.lastname"
                name="lastname"
                maxlength="150"
                required />
-      </md-input-container>
+      </mat-input-container>
     </div>
     <div layout="row" id="email">
-      <md-input-container flex>
-        <input mdInput
+      <mat-input-container flex>
+        <input matInput
                type="text"
                placeholder="Email"
                [(ngModel)]="registration.email"
                name="email"
                maxlength="150"
                required />
-      </md-input-container>
+      </mat-input-container>
     </div>
     <div layout="row" id="password">
-      <md-input-container flex>
-        <input mdInput
+      <mat-input-container flex>
+        <input matInput
                type="password"
                placeholder="Password"
                [(ngModel)]="registration.password"
                name="password"
                maxlength="150"
                required />
-      </md-input-container>
+      </mat-input-container>
     </div>
     <div layout="row" id="passwordConfirmation">
-      <md-input-container flex>
-        <input mdInput
+      <mat-input-container flex>
+        <input matInput
                type="password"
                placeholder="Password confirmation"
                [(ngModel)]="registration.passwordConfirmation"
                name="passwordConfirmation"
                maxlength="150"
                required />
-      </md-input-container>
+      </mat-input-container>
     </div>
     <td-message label="Error!" [sublabel]="error.message" color="warn" icon="error" *ngIf="error"></td-message>
-  </md-card-content>
-  <md-divider></md-divider>
-  <md-card-actions>
-    <button type="submit" md-button [disabled]="!(registrationForm.valid)" color="primary">REGISTRATION</button>
-    <button type="button" md-button (click)="cancel()">CANCEL</button>
-  </md-card-actions>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions>
+    <button type="submit" mat-button [disabled]="!(registrationForm.valid)" color="primary">REGISTRATION</button>
+    <button type="button" mat-button (click)="cancel()">CANCEL</button>
+  </mat-card-actions>
 </form>

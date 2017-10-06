@@ -1,33 +1,33 @@
 <h1>Login</h1>
 <form #loginForm="ngForm" (ngSubmit)="submit()">
-  <md-card-content>
+  <mat-card-content>
     <div layout="row" id="email">
-      <md-input-container flex>
-        <input mdInput
+      <mat-input-container flex>
+        <input matInput
                type="text"
                placeholder="Email"
                [(ngModel)]="credentials.email"
                name="email"
                maxlength="150"
                required />
-      </md-input-container>
+      </mat-input-container>
     </div>
     <div layout="row" id="password">
-      <md-input-container flex>
-        <input mdInput
+      <mat-input-container flex>
+        <input matInput
                type="password"
                placeholder="Password"
                [(ngModel)]="credentials.password"
                name="password"
                maxlength="150"
                required />
-      </md-input-container>
+      </mat-input-container>
     </div>
     <td-message label="Error!" [sublabel]="error.message" color="warn" icon="error" *ngIf="error"></td-message>
-  </md-card-content>
-  <md-divider></md-divider>
-  <md-card-actions>
-    <button type="submit" md-button [disabled]="!(loginForm.valid)" color="primary">LOGIN</button>
-    <button type="button" md-button (click)="cancel()">CANCEL</button>
-  </md-card-actions>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions>
+    <button type="submit" mat-button [disabled]="!(loginForm.valid)" color="primary">LOGIN</button>
+    <button type="button" mat-button (click)="cancel()">CANCEL</button>
+  </mat-card-actions>
 </form>

@@ -14,6 +14,7 @@ import { AuthenticationService } from './services/api.services';
 import { AuthService } from './services/auth.service';
 import { DashboardModule } from './components/dashboard/dashboard.module';
 import { SamplesModule } from './components/samples/samples.module';
+import { NoConflictStyleCompatibilityMode } from '@angular/material'
 
 @NgModule({
 	imports: [
@@ -21,6 +22,7 @@ import { SamplesModule } from './components/samples/samples.module';
 		FormsModule,
 		HttpModule,
 		BrowserAnimationsModule,
+    NoConflictStyleCompatibilityMode,
 
 		//Test1
 		AppRoutingModule,
