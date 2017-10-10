@@ -4,7 +4,7 @@ import { ErrorInfo } from "./../common/errorInfo";
 export class ServiceBase {
 
 	protected transformOptions(options: any) {
-		console.log("HTTP call, options: " + JSON.stringify(options));
+		//console.log("HTTP call, options: " + JSON.stringify(options));
 		
 		var item = localStorage.getItem('expiration_date');
 		if (item) {

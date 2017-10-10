@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation, OnInit, ChangeDetectorRef, HostBinding } from '@angular/core';
+import { TdMediaService } from '@covalent/core';
 import { slideInDownAnimation } from './../../animations';
 import { CredentialsDto } from './../../services/api.services';
 import { AuthService } from './../../services/auth.service';
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
 	private error: ErrorInfo;
 
 	constructor(
+		public media: TdMediaService,
 		private _authService: AuthService,
 		private _changeDetectionRef: ChangeDetectorRef,
 		private router: Router
@@ -48,6 +50,7 @@ export class LoginComponent implements OnInit {
 	}
 
 	ngAfterViewInit(): void {
+		this.media.broadcast();
 		this._changeDetectionRef.detectChanges();
 	}
 }

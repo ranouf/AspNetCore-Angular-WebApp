@@ -2,6 +2,7 @@
 
 @import '~@angular/material/theming';
 @import '~@covalent/core/theming/all-theme';
+@import '~@covalent/core/common/platform.css';
 
 @include mat-core();
 

@@ -8,11 +8,16 @@ import { SampleListComponent } from './sample-list.component';
 import { SamplesService } from './../../services/api.services';
 import { SamplesRoutingModule } from './samples-routing.module';
 
+import { MatCardModule } from '@angular/material';
+import { CovalentMediaModule } from '@covalent/core';
+
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
-		SamplesRoutingModule
+		SamplesRoutingModule,
+		MatCardModule,
+		CovalentMediaModule,
 	],
 	declarations: [
 		SampleListComponent,

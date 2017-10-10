@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation, OnInit, ChangeDetectorRef, HostBinding } from '@angular/core';
+import { TdMediaService } from '@covalent/core';
 import { slideInDownAnimation }   from './../../animations';
 
 @Component({
@@ -10,6 +11,7 @@ export class DashboardComponent implements OnInit {
   @HostBinding('@routeAnimation') routeAnimation = true;
 
 	constructor(
+    public media: TdMediaService,
 		private _changeDetectionRef: ChangeDetectorRef) {
 	}
 
@@ -17,6 +19,7 @@ export class DashboardComponent implements OnInit {
 	}
 
 	ngAfterViewInit(): void {
+		this.media.broadcast();
 		this._changeDetectionRef.detectChanges();
 	}
 }
