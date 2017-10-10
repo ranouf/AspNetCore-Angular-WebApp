@@ -6,8 +6,10 @@ import { AuthGuard }                from './services/auth-guard.service';
 
 import { SelectivePreloadingStrategy } from './selective-preloading-strategy';
 
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const appRoutes: Routes = [
+	{ path: '', component: DashboardComponent },
   {
     path: 'authentication',
     loadChildren: 'app/components/authentication/authentication.module#AuthenticationModule',
@@ -18,7 +20,6 @@ const appRoutes: Routes = [
     loadChildren: 'app/components/samples/samples.module#SamplesModule',
     canLoad: [AuthGuard]
   },
-	{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 ];
 
 @NgModule({

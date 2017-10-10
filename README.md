@@ -19,6 +19,7 @@ This project uses:
 ## Sources:
 - Angular:
   * Routing: `https://angular.io/guide/router`
+  * Updated Material Compatibility mode: `https://www.npmjs.com/package/angular-material-prefix-updater`
 - Asp.Net Core:
   * Identity: 
       > `https://fullstackmark.com/post/10/user-authentication-with-angular-and-asp-net-core`

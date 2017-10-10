@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation, OnInit, ChangeDetectorRef, HostBinding } from '@angular/core';
+import { TdMediaService } from '@covalent/core';
 import { slideInDownAnimation } from './../../animations';
 import { AuthService } from './../../services/auth.service';
 import { AuthenticationService } from './../../services/api.services';
@@ -13,6 +14,7 @@ export class SampleListComponent implements OnInit {
 
 	constructor(
 		private _authService: AuthService,
+		public media: TdMediaService,
 		private _authenticationService: AuthenticationService,
 		private _changeDetectionRef: ChangeDetectorRef
 	) {
@@ -26,7 +28,7 @@ export class SampleListComponent implements OnInit {
 	test() {
 		this._authenticationService.test()
 			.subscribe(result => {
-				console.trace('Success - AuthenticationService.Test');
+				//console.trace('Success - AuthenticationService.Test');
 			}, error => {
 				console.log('Error - AuthenticationService.Test');
 			});
@@ -36,6 +38,7 @@ export class SampleListComponent implements OnInit {
 	}
 
 	ngAfterViewInit(): void {
+		this.media.broadcast();
 		this._changeDetectionRef.detectChanges();
 	}
 }
