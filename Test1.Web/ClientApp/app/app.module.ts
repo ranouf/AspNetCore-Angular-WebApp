@@ -14,7 +14,10 @@ import { AuthenticationService } from './services/api.services';
 import { AuthService } from './services/auth.service';
 import { DashboardModule } from './components/dashboard/dashboard.module';
 import { SamplesModule } from './components/samples/samples.module';
-import { NoConflictStyleCompatibilityMode } from '@angular/material'
+import { MATERIAL_COMPATIBILITY_MODE } from '@angular/material';
+
+import * as _fromAngularMaterial from '@angular/material';
+import * as _fromCovalent from '@covalent/core';
 
 @NgModule({
 	imports: [
@@ -22,7 +25,10 @@ import { NoConflictStyleCompatibilityMode } from '@angular/material'
 		FormsModule,
 		HttpModule,
 		BrowserAnimationsModule,
-    NoConflictStyleCompatibilityMode,
+
+		_fromAngularMaterial.MatIconModule,
+		_fromAngularMaterial.MatButtonModule,
+		_fromCovalent.CovalentLayoutModule,
 
 		//Test1
 		AppRoutingModule,
@@ -35,7 +41,8 @@ import { NoConflictStyleCompatibilityMode } from '@angular/material'
 	],
 	providers: [
 		AuthenticationService,
-		AuthService
+		AuthService,
+		{ provide: MATERIAL_COMPATIBILITY_MODE, useValue: true }
 	],
 	bootstrap: [AppComponent]
 })

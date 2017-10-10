@@ -2,7 +2,7 @@
 <form #loginForm="ngForm" (ngSubmit)="submit()">
   <mat-card-content>
     <div layout="row" id="email">
-      <mat-input-container flex>
+      <mat-form-field flex>
         <input matInput
                type="text"
                placeholder="Email"
@@ -10,10 +10,10 @@
                name="email"
                maxlength="150"
                required />
-      </mat-input-container>
+      </mat-form-field>
     </div>
     <div layout="row" id="password">
-      <mat-input-container flex>
+      <mat-form-field flex>
         <input matInput
                type="password"
                placeholder="Password"
@@ -21,7 +21,7 @@
                name="password"
                maxlength="150"
                required />
-      </mat-input-container>
+      </mat-form-field>
     </div>
     <td-message label="Error!" [sublabel]="error.message" color="warn" icon="error" *ngIf="error"></td-message>
   </mat-card-content>

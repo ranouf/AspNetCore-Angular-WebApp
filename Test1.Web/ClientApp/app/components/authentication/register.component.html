@@ -2,7 +2,7 @@
 <form #registrationForm="ngForm" (ngSubmit)="submit()">
   <mat-card-content>
     <div layout="row" id="firstname">
-      <mat-input-container flex>
+      <mat-form-field flex>
         <input matInput
                type="text"
                placeholder="Firstname"
@@ -10,10 +10,10 @@
                name="firstname"
                maxlength="150"
                required />
-      </mat-input-container>
+      </mat-form-field>
     </div>
     <div layout="row" id="lastname">
-      <mat-input-container flex>
+      <mat-form-field flex>
         <input matInput
                type="text"
                placeholder="Lastname"
@@ -21,10 +21,10 @@
                name="lastname"
                maxlength="150"
                required />
-      </mat-input-container>
+      </mat-form-field>
     </div>
     <div layout="row" id="email">
-      <mat-input-container flex>
+      <mat-form-field flex>
         <input matInput
                type="text"
                placeholder="Email"
@@ -32,10 +32,10 @@
                name="email"
                maxlength="150"
                required />
-      </mat-input-container>
+      </mat-form-field>
     </div>
     <div layout="row" id="password">
-      <mat-input-container flex>
+      <mat-form-field flex>
         <input matInput
                type="password"
                placeholder="Password"
@@ -43,10 +43,10 @@
                name="password"
                maxlength="150"
                required />
-      </mat-input-container>
+      </mat-form-field>
     </div>
     <div layout="row" id="passwordConfirmation">
-      <mat-input-container flex>
+      <mat-form-field flex>
         <input matInput
                type="password"
                placeholder="Password confirmation"
@@ -54,7 +54,7 @@
                name="passwordConfirmation"
                maxlength="150"
                required />
-      </mat-input-container>
+      </mat-form-field>
     </div>
     <td-message label="Error!" [sublabel]="error.message" color="warn" icon="error" *ngIf="error"></td-message>
   </mat-card-content>
