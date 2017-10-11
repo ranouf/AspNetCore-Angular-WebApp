@@ -2,11 +2,11 @@ import { Component, ViewEncapsulation, OnInit, ChangeDetectorRef, HostBinding } 
 import { slideInDownAnimation } from './../../animations';
 
 @Component({
-	selector: 'sample-dit',
-	templateUrl: './sample-edit.component.html',
+	selector: 'sample-view',
+	templateUrl: './sample-view.component.html',
 	animations: [slideInDownAnimation]
 })
-export class SampleEditComponent implements OnInit {
+export class SampleViewComponent implements OnInit {
 	@HostBinding('@routeAnimation') routeAnimation = true;
 
 	constructor(
