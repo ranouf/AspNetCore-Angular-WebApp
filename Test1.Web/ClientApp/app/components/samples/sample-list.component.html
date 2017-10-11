@@ -3,6 +3,18 @@
   <mat-card-subtitle>You are on an authentified page</mat-card-subtitle>
   <mat-divider></mat-divider>
   <mat-card-content>
+
+    <mat-table #table [dataSource]="sampleDataSource">
+      <ng-container matColumnDef="value">
+        <mat-header-cell *matHeaderCellDef> Value </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.value}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *cdkHeaderRowDef="['value']"></mat-header-row>
+      <mat-row *cdkRowDef="let row; columns: ['value'];"></mat-row>
+    </mat-table>
+
+    <mat-divider></mat-divider>
     <button type="button" mat-button color="primary" (click)="logout()">LOGOUT</button>
     <button type="button" mat-button color="primary" (click)="test()">TEST</button>
   </mat-card-content>

@@ -8,16 +8,19 @@ import { SampleListComponent } from './sample-list.component';
 import { SamplesService } from './../../services/api.services';
 import { SamplesRoutingModule } from './samples-routing.module';
 
-import { MatCardModule } from '@angular/material';
-import { CovalentMediaModule } from '@covalent/core';
+import * as _fromAngularMaterial from '@angular/material';
+import {CdkTableModule} from '@angular/cdk/table';
+import * as _fromCovalent from '@covalent/core';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
 		SamplesRoutingModule,
-		MatCardModule,
-		CovalentMediaModule,
+		_fromAngularMaterial.MatCardModule,
+    _fromAngularMaterial.MatTableModule,
+    CdkTableModule,
+		_fromCovalent.CovalentMediaModule,
 	],
 	declarations: [
 		SampleListComponent,
