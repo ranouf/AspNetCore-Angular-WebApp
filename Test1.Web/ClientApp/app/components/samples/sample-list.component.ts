@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, OnInit, ChangeDetectorRef, HostBinding } from '@angular/core';
-import { TdMediaService } from '@covalent/core';
+import { TdMediaService, TdDialogService } from '@covalent/core';
 import { slideInDownAnimation } from './../../animations';
 import { AuthService } from './../../services/auth.service';
 import { AuthenticationService, SamplesService, MySampleDto } from './../../services/api.services';
@@ -22,6 +22,7 @@ export class SampleListComponent implements OnInit {
 		private _authService: AuthService,
     private samplesService: SamplesService,
 		public media: TdMediaService,
+    private dialogService: TdDialogService,
 		private _authenticationService: AuthenticationService,
 		private _changeDetectionRef: ChangeDetectorRef
 	) {
@@ -40,6 +41,21 @@ export class SampleListComponent implements OnInit {
 			});
 	}
 
+  delete(sample: MySampleDto): void {
+      this.dialogService
+          .openConfirm({ message: 'Are you sure you want to delete this sample?' })
+          .afterClosed().subscribe((confirm: boolean) => {
+              if (confirm) {
+                  this.samplesService.deleteSample(sample.id)
+                      .subscribe(result => {
+                          this.sampleDataSource.connect();
+                      }, error => {
+                        console.log('Error samplesService.deleteSample: ' + error);
+                      });
+              }
+          });
+  }
+
 	ngOnInit() {
     this.sampleDataSource = new SampleDataSource(this.samplesService);
 	}
@@ -51,21 +67,23 @@ export class SampleListComponent implements OnInit {
 }
 
 export class SampleDataSource extends DataSource<MySampleDto> {
-  constructor(private samplesService: SamplesService) {
+  constructor(
+    private samplesService: SamplesService,
+  ) {
       super();
   }
 
   subject: BehaviorSubject<MySampleDto[]> = new BehaviorSubject<MySampleDto[]>([]);
 
   connect(): Observable<MySampleDto[]> {
-      if (!this.subject.isStopped) {
+      if (!this.subject.isStopped) {        
         this.samplesService.getSamples()
-        .subscribe(result => {
-          this.subject.next(result);
-        }, error => {
-          console.log('Error SamplesService.getSamples: ' + error);
-          this.subject.error(error);
-        });
+          .subscribe(result => {
+            this.subject.next(result);
+          }, error => {
+            console.log('Error SamplesService.getSamples: ' + error);
+            this.subject.error(error);
+          });
       }
       return Observable.merge(this.subject);
   }

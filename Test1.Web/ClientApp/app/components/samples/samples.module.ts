@@ -23,7 +23,8 @@ import * as _fromCovalent from '@covalent/core';
     _fromAngularMaterial.MatIconModule,
     _fromAngularMaterial.MatMenuModule,
     CdkTableModule,
-		_fromCovalent.CovalentMediaModule,
+    _fromCovalent.CovalentMediaModule,
+    _fromCovalent.CovalentDialogsModule,
 	],
 	declarations: [
 		SampleListComponent,
