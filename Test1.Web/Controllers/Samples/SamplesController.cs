@@ -51,6 +51,8 @@ namespace Test1.Controllers.Samples
     {
       var query = _sampleManager.GetAllSamples();
 
+      query = query.Sort(dto);
+
       return new ObjectResult(
         await query.ToPageResultAsync<MySample, MySampleDto>(dto)
       );

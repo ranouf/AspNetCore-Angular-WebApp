@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Test1.Web.Common.Dto
 {
-  public class PagedRequestDto: IPagedRequestDto
+  public interface ISortedRequestDto
   {
-    public int? PageSize { get; set; }
-    public int? PageIndex { get; set; }
+    string Sort { get; set; }
+    string Direction { get; set; }
   }
 }

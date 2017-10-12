@@ -8,9 +8,9 @@
         <h4>No samples to display.</h4>
       </div>
       <div *ngIf="subject.getValue().length > 0">
-        <mat-table #table [dataSource]="dataSource">
+        <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
           <ng-container matColumnDef="value">
-            <mat-header-cell *matHeaderCellDef> Value </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Value </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.value}} </mat-cell>
           </ng-container>
 
@@ -26,7 +26,7 @@
                 <!--<a [routerLink]="['/samples/edit', row.id]" mat-menu-item>
                   Edit
                 </a>-->
-                <button (click)="delete(row)" mat-menu-item>
+                <button (click)="deleteItem(row)" mat-menu-item>
                   Delete
                 </button>
               </mat-menu>

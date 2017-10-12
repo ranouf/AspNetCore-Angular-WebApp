@@ -5,12 +5,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Test1.Web.Common.Dto;
+using System.Linq.Dynamic.Core;
 
 namespace Test1.Web.Common.Extensions
 {
   public static class DtoExtensions
   {
-    public static async Task<PagedResultDto<TResult>> ToPageResultAsync<T, TResult>(this IQueryable<T> query, PagedRequestDto dto)
+    public static IQueryable<T> Sort<T>(this IQueryable<T> query, ISortedRequestDto dto)
+    {
+      if (!string.IsNullOrEmpty(dto.Sort)){
+        query = query.OrderBy($"{dto.Sort} {dto.Direction}");
+      }
+
+      return query;
+    }
+
+    public static async Task<PagedResultDto<TResult>> ToPageResultAsync<T, TResult>(this IQueryable<T> query, IPagedRequestDto dto)
     {
       var length = await query.CountAsync();
       var hasNextPage = dto.PageSize.HasValue || (dto.PageIndex + dto.PageSize) < length;

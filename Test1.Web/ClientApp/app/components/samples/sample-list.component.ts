@@ -8,59 +8,69 @@ import { Http } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Rx';
 import {PageEvent} from '@angular/material';
+import {Sort} from '@angular/material';
 
 @Component({
-	selector: 'app-sample-list',
-	templateUrl: './sample-list.component.html',
+  selector: 'app-sample-list',
+  templateUrl: './sample-list.component.html',
   providers: [SamplesService],
-	animations: [slideInDownAnimation]
+  animations: [slideInDownAnimation]
 })
 export class SampleListComponent implements OnInit {
-	@HostBinding('@routeAnimation') routeAnimation = true;
+  @HostBinding('@routeAnimation') routeAnimation = true;
 
   dataSource: SampleDataSource = <SampleDataSource>{};
   subject = new BehaviorSubject<MySampleDto[]>([]);
 
+  sort = '';
+  direction = '';
   pageSize = 5;
   pageIndex = 0;
   length = 0;
 
-	constructor(
-		private _authService: AuthService,
+  constructor(
+    private _authService: AuthService,
     private samplesService: SamplesService,
-		public media: TdMediaService,
+    public media: TdMediaService,
     private dialogService: TdDialogService,
     private loadingService: TdLoadingService,
-		private _authenticationService: AuthenticationService,
-		private _changeDetectionRef: ChangeDetectorRef
-	) {
-	}
+    private _authenticationService: AuthenticationService,
+    private _changeDetectionRef: ChangeDetectorRef
+  ) {
+  }
 
-	logout() {
-		this._authService.logout();
-	}
+  logout() {
+    this._authService.logout();
+  }
 
-	test() {
-		this._authenticationService.test()
-			.subscribe(result => {
-				// console.trace('Success - AuthenticationService.Test');
-			}, error => {
-				console.log('Error - AuthenticationService.Test');
-			});
-	}
+  test() {
+    this._authenticationService.test()
+      .subscribe(result => {
+        // console.trace('Success - AuthenticationService.Test');
+      }, error => {
+        console.log('Error - AuthenticationService.Test');
+      });
+  }
 
   changePage(pageEvent: PageEvent): void {
     this.pageSize = pageEvent.pageSize;
     this.pageIndex = pageEvent.pageIndex;
-
-    this.loadSamples();
+    this.loadData();
   }
 
-  loadSamples(): void {
+  sortData(sort: Sort): void {
+    this.sort = sort.active;
+    this.direction = sort.direction;
+    this.loadData();
+  }
+
+  loadData(): void {
     this.loadingService.register('samples');
     this.samplesService.getSamples(
       this.pageSize,
-      this.pageIndex
+      this.pageIndex,
+      this.sort,
+      this.direction
     )
       .subscribe(result => {
         this.length = result.length;
@@ -73,7 +83,7 @@ export class SampleListComponent implements OnInit {
       });
   }
 
-  delete(sample: MySampleDto): void {
+  deleteItem(sample: MySampleDto): void {
       this.dialogService
           .openConfirm({ message: 'Are you sure you want to delete this sample?' })
           .afterClosed().subscribe((confirm: boolean) => {
@@ -81,7 +91,7 @@ export class SampleListComponent implements OnInit {
                   this.loadingService.register('samples');
                   this.samplesService.deleteSample(sample.id)
                       .subscribe(result => {
-                        this.loadSamples();
+                        this.loadData();
                         this.loadingService.resolve('samples');
                       }, error => {
                         console.log('Error samplesService.deleteSample: ' + error);
@@ -91,15 +101,15 @@ export class SampleListComponent implements OnInit {
           });
   }
 
-	ngOnInit(): void {
+  ngOnInit(): void {
     this.dataSource = new SampleDataSource(this.subject);
-    this.loadSamples();
-	}
+    this.loadData();
+  }
 
-	ngAfterViewInit(): void {
-		this.media.broadcast();
-		this._changeDetectionRef.detectChanges();
-	}
+  ngAfterViewInit(): void {
+    this.media.broadcast();
+    this._changeDetectionRef.detectChanges();
+  }
 }
 
 export class SampleDataSource extends DataSource<MySampleDto> {

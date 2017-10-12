@@ -6,7 +6,7 @@ using Test1.Web.Common.Dto;
 
 namespace Test1.Web.Controllers.Samples.Dto
 {
-  public class GetSamplesRequestDto : PagedRequestDto
+  public class GetSamplesRequestDto : PagedAndSortedRequestDto
   {
   }
 }
