@@ -1,12 +1,12 @@
 import { Component, ViewEncapsulation, OnInit, ChangeDetectorRef, HostBinding } from '@angular/core';
-import { TdMediaService, TdDialogService } from '@covalent/core';
+import { TdMediaService, TdDialogService, TdLoadingService } from '@covalent/core';
 import { slideInDownAnimation } from './../../animations';
 import { AuthService } from './../../services/auth.service';
 import { AuthenticationService, SamplesService, MySampleDto } from './../../services/api.services';
-import {DataSource} from '@angular/cdk/collections';
+import { DataSource } from '@angular/cdk/collections';
 import { Http } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
 	selector: 'app-sample-list',
@@ -16,13 +16,16 @@ import {Observable} from 'rxjs/Rx';
 })
 export class SampleListComponent implements OnInit {
 	@HostBinding('@routeAnimation') routeAnimation = true;
-  sampleDataSource: SampleDataSource = <SampleDataSource>{};
+
+  dataSource: SampleDataSource = <SampleDataSource>{};
+  subject = new BehaviorSubject<MySampleDto[]>([]);
 
 	constructor(
 		private _authService: AuthService,
     private samplesService: SamplesService,
 		public media: TdMediaService,
     private dialogService: TdDialogService,
+    private loadingService: TdLoadingService,
 		private _authenticationService: AuthenticationService,
 		private _changeDetectionRef: ChangeDetectorRef
 	) {
@@ -41,23 +44,40 @@ export class SampleListComponent implements OnInit {
 			});
 	}
 
+  loadSamples(): void{
+    this.loadingService.register('samples');
+    this.samplesService.getSamples()
+      .subscribe(result => {
+        this.subject.next(result);
+        this.loadingService.resolve('samples');
+      }, error => {
+        console.log('Error SamplesService.getSamples: ' + error);
+        this.subject.error(error);
+        this.loadingService.resolve('samples');
+      });
+  }
+
   delete(sample: MySampleDto): void {
       this.dialogService
           .openConfirm({ message: 'Are you sure you want to delete this sample?' })
           .afterClosed().subscribe((confirm: boolean) => {
               if (confirm) {
+                  this.loadingService.register('samples');
                   this.samplesService.deleteSample(sample.id)
                       .subscribe(result => {
-                          this.sampleDataSource.connect();
+                        this.loadSamples();
+                        this.loadingService.resolve('samples');
                       }, error => {
                         console.log('Error samplesService.deleteSample: ' + error);
+                        this.loadingService.resolve('samples');
                       });
               }
           });
   }
 
 	ngOnInit() {
-    this.sampleDataSource = new SampleDataSource(this.samplesService);
+    this.dataSource = new SampleDataSource(this.subject);
+    this.loadSamples();
 	}
 
 	ngAfterViewInit(): void {
@@ -68,28 +88,14 @@ export class SampleListComponent implements OnInit {
 
 export class SampleDataSource extends DataSource<MySampleDto> {
   constructor(
-    private samplesService: SamplesService,
+    private subject: BehaviorSubject<MySampleDto[]>
   ) {
       super();
   }
 
-  subject: BehaviorSubject<MySampleDto[]> = new BehaviorSubject<MySampleDto[]>([]);
-
   connect(): Observable<MySampleDto[]> {
-      if (!this.subject.isStopped) {        
-        this.samplesService.getSamples()
-          .subscribe(result => {
-            this.subject.next(result);
-          }, error => {
-            console.log('Error SamplesService.getSamples: ' + error);
-            this.subject.error(error);
-          });
-      }
-      return Observable.merge(this.subject);
+      return this.subject.asObservable();
   }
 
-  disconnect() {
-      this.subject.complete();
-      this.subject.observers = [];
-  }
+  disconnect() {}
 }

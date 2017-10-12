@@ -25,6 +25,7 @@ import * as _fromCovalent from '@covalent/core';
     CdkTableModule,
     _fromCovalent.CovalentMediaModule,
     _fromCovalent.CovalentDialogsModule,
+    _fromCovalent.CovalentLoadingModule,
 	],
 	declarations: [
 		SampleListComponent,

@@ -3,8 +3,11 @@
   <mat-card-subtitle>You are on an authentified page</mat-card-subtitle>
   <mat-divider></mat-divider>
   <mat-card-content>
-
-      <mat-table #table [dataSource]="sampleDataSource">
+    <ng-template tdLoading="samples" *ngIf="subject |async" tdLoadingStrategy="overlay"s>
+      <div class="md-padding" *ngIf="subject.getValue().length == 0" layout="row" layout-align="center center">
+        <h4>No samples to display.</h4>
+      </div>
+      <mat-table #table [dataSource]="dataSource" *ngIf="subject.getValue().length > 0">
         <ng-container matColumnDef="value">
           <mat-header-cell *matHeaderCellDef> Value </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.value}} </mat-cell>
@@ -28,11 +31,10 @@
             </mat-menu>
           </mat-cell>
         </ng-container>
-
-
         <mat-header-row *cdkHeaderRowDef="['value','actions']"></mat-header-row>
         <mat-row *cdkRowDef="let row; columns: ['value','actions'];"></mat-row>
       </mat-table>
+    </ng-template>
 
     <mat-divider></mat-divider>
     <button type="button" mat-button color="primary" (click)="logout()">LOGOUT</button>
