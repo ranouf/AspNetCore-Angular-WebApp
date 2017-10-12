@@ -10,6 +10,9 @@ using AutoMapper;
 using System.Net.Http;
 using Test1.Web.Controllers;
 using Test1.Core.Runtime.Session;
+using System.Linq;
+using Test1.Web.Common.Dto;
+using Test1.Web.Common.Extensions;
 
 namespace Test1.Controllers.Samples
 {
@@ -43,11 +46,14 @@ namespace Test1.Controllers.Samples
 
     // GET
     [HttpGet]
-    [ProducesResponseType(typeof(List<MySampleDto>), 200)]
-    public async Task<IActionResult> GetSamples()
+    [ProducesResponseType(typeof(PagedResultDto<MySampleDto>), 200)]
+    public async Task<IActionResult> GetSamples(GetSamplesRequestDto dto)
     {
-      var result = await _sampleManager.GetAllSamples().ToListAsync();
-      return new ObjectResult(Mapper.Map<List<MySample>, List<MySampleDto>>(result));
+      var query = _sampleManager.GetAllSamples();
+
+      return new ObjectResult(
+        await query.ToPageResultAsync<MySample, MySampleDto>(dto)
+      );
     }
 
     // POST

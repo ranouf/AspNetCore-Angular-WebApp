@@ -3,37 +3,44 @@
   <mat-card-subtitle>You are on an authentified page</mat-card-subtitle>
   <mat-divider></mat-divider>
   <mat-card-content>
-    <ng-template tdLoading="samples" *ngIf="subject |async" tdLoadingStrategy="overlay"s>
+    <ng-template tdLoading="samples" *ngIf="subject |async" tdLoadingStrategy="overlay" s>
       <div class="md-padding" *ngIf="subject.getValue().length == 0" layout="row" layout-align="center center">
         <h4>No samples to display.</h4>
       </div>
-      <mat-table #table [dataSource]="dataSource" *ngIf="subject.getValue().length > 0">
-        <ng-container matColumnDef="value">
-          <mat-header-cell *matHeaderCellDef> Value </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.value}} </mat-cell>
-        </ng-container>
+      <div *ngIf="subject.getValue().length > 0">
+        <mat-table #table [dataSource]="dataSource">
+          <ng-container matColumnDef="value">
+            <mat-header-cell *matHeaderCellDef> Value </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.value}} </mat-cell>
+          </ng-container>
 
-        <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-          <mat-cell *matCellDef="let row" [style.text-align]="'right'">
-            <button mat-icon-button
-                    x-position="before"
-                    [matMenuTriggerFor]="menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-              <!--<a [routerLink]="['/samples/edit', row.id]" mat-menu-item>
-                Edit
-              </a>-->
-              <button (click)="delete(row)" mat-menu-item>
-                Delete
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-cell *matCellDef="let row" [style.text-align]="'right'">
+              <button mat-icon-button
+                      x-position="before"
+                      [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
               </button>
-            </mat-menu>
-          </mat-cell>
-        </ng-container>
-        <mat-header-row *cdkHeaderRowDef="['value','actions']"></mat-header-row>
-        <mat-row *cdkRowDef="let row; columns: ['value','actions'];"></mat-row>
-      </mat-table>
+              <mat-menu #menu="matMenu">
+                <!--<a [routerLink]="['/samples/edit', row.id]" mat-menu-item>
+                  Edit
+                </a>-->
+                <button (click)="delete(row)" mat-menu-item>
+                  Delete
+                </button>
+              </mat-menu>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *cdkHeaderRowDef="['value','actions']"></mat-header-row>
+          <mat-row *cdkRowDef="let row; columns: ['value','actions'];"></mat-row>
+        </mat-table>
+        <mat-paginator [length]="length"
+                       [pageSize]="pageSize"
+                       [pageSizeOptions]="[5, 10, 20, 100]"
+                       (page)="changePage($event)">
+        </mat-paginator>
+      </div>
     </ng-template>
 
     <mat-divider></mat-divider>

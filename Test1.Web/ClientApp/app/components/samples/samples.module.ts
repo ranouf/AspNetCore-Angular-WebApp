@@ -22,6 +22,7 @@ import * as _fromCovalent from '@covalent/core';
     _fromAngularMaterial.MatButtonModule,
     _fromAngularMaterial.MatIconModule,
     _fromAngularMaterial.MatMenuModule,
+    _fromAngularMaterial.MatPaginatorModule,
     CdkTableModule,
     _fromCovalent.CovalentMediaModule,
     _fromCovalent.CovalentDialogsModule,

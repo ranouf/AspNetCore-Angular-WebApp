@@ -7,6 +7,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { Http } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Rx';
+import {PageEvent} from '@angular/material';
 
 @Component({
 	selector: 'app-sample-list',
@@ -19,6 +20,10 @@ export class SampleListComponent implements OnInit {
 
   dataSource: SampleDataSource = <SampleDataSource>{};
   subject = new BehaviorSubject<MySampleDto[]>([]);
+
+  pageSize = 5;
+  pageIndex = 0;
+  length = 0;
 
 	constructor(
 		private _authService: AuthService,
@@ -44,11 +49,22 @@ export class SampleListComponent implements OnInit {
 			});
 	}
 
-  loadSamples(): void{
+  changePage(pageEvent: PageEvent): void {
+    this.pageSize = pageEvent.pageSize;
+    this.pageIndex = pageEvent.pageIndex;
+
+    this.loadSamples();
+  }
+
+  loadSamples(): void {
     this.loadingService.register('samples');
-    this.samplesService.getSamples()
+    this.samplesService.getSamples(
+      this.pageSize,
+      this.pageIndex
+    )
       .subscribe(result => {
-        this.subject.next(result);
+        this.length = result.length;
+        this.subject.next(result.items);
         this.loadingService.resolve('samples');
       }, error => {
         console.log('Error SamplesService.getSamples: ' + error);
@@ -75,7 +91,7 @@ export class SampleListComponent implements OnInit {
           });
   }
 
-	ngOnInit() {
+	ngOnInit(): void {
     this.dataSource = new SampleDataSource(this.subject);
     this.loadSamples();
 	}
