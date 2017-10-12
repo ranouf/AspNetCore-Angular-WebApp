@@ -24,6 +24,7 @@ import * as _fromCovalent from '@covalent/core';
     _fromAngularMaterial.MatMenuModule,
     _fromAngularMaterial.MatPaginatorModule,
     _fromAngularMaterial.MatSortModule,
+    _fromAngularMaterial.MatInputModule,
     CdkTableModule,
     _fromCovalent.CovalentMediaModule,
     _fromCovalent.CovalentDialogsModule,

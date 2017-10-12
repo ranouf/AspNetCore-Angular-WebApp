@@ -13,9 +13,7 @@ namespace Test1.Web.Common.Extensions
   {
     public static IQueryable<T> Sort<T>(this IQueryable<T> query, ISortedRequestDto dto)
     {
-      if (!string.IsNullOrEmpty(dto.Sort)){
-        query = query.OrderBy($"{dto.Sort} {dto.Direction}");
-      }
+      query = query.OrderBy($"{dto.Sort} {dto.Direction}");
 
       return query;
     }

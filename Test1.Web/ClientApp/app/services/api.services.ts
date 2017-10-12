@@ -155,7 +155,7 @@ export class SamplesService extends ServiceBase {
         return Observable.of<any | null>(<any>null);
     }
 
-    getSamples(pageSize: number | null, pageIndex: number | null, sort: string | null, direction: string | null): Observable<PagedResultDtoOfMySampleDto | null> {
+    getSamples(pageSize: number | null, pageIndex: number | null, sort: string | null, direction: string | null, filter: string | null): Observable<PagedResultDtoOfMySampleDto | null> {
         let url_ = this.baseUrl + "/api/v1/Samples?";
         if (pageSize !== undefined)
             url_ += "pageSize=" + encodeURIComponent("" + pageSize) + "&"; 
@@ -165,6 +165,8 @@ export class SamplesService extends ServiceBase {
             url_ += "sort=" + encodeURIComponent("" + sort) + "&"; 
         if (direction !== undefined)
             url_ += "direction=" + encodeURIComponent("" + direction) + "&"; 
+        if (filter !== undefined)
+            url_ += "filter=" + encodeURIComponent("" + filter) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ = {

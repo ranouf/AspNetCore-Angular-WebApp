@@ -1,18 +1,16 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Test1.Core.Sample;
 using Test1.Core.Sample.Entities;
-using Microsoft.EntityFrameworkCore;
 using Test1.Web.Controllers.Samples.Dto;
 using AutoMapper;
-using System.Net.Http;
 using Test1.Web.Controllers;
 using Test1.Core.Runtime.Session;
 using System.Linq;
 using Test1.Web.Common.Dto;
 using Test1.Web.Common.Extensions;
+using System.Linq.Dynamic.Core;
 
 namespace Test1.Controllers.Samples
 {
@@ -51,7 +49,14 @@ namespace Test1.Controllers.Samples
     {
       var query = _sampleManager.GetAllSamples();
 
-      query = query.Sort(dto);
+      if (!string.IsNullOrEmpty(dto.Filter)){
+        query = query.Where(s => s.Value.Contains(dto.Filter));
+      }
+
+      if (!string.IsNullOrEmpty(dto.Sort))
+      {
+        query = query.Sort(dto);
+      }
 
       return new ObjectResult(
         await query.ToPageResultAsync<MySample, MySampleDto>(dto)

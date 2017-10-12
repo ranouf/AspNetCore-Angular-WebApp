@@ -3,12 +3,21 @@
   <mat-card-subtitle>You are on an authentified page</mat-card-subtitle>
   <mat-divider></mat-divider>
   <mat-card-content>
-    <ng-template tdLoading="samples" *ngIf="subject |async" tdLoadingStrategy="overlay" s>
-      <div class="md-padding" *ngIf="subject.getValue().length == 0" layout="row" layout-align="center center">
+    <ng-template tdLoading="samples" tdLoadingStrategy="overlay">
+      <div layout="row">
+        <mat-icon class="push-top push-right-sm">search</mat-icon>
+        <mat-form-field floatPlaceholder="never" flex>
+          <input matInput
+                 [ngModel]="filter"
+                 (ngModelChange)="changeFilter($event)"
+                 placeholder="Filter samples">
+        </mat-form-field>
+      </div>
+      <div class="md-padding" *ngIf="subject.getValue() && subject.getValue().length == 0" layout="row" layout-align="center center">
         <h4>No samples to display.</h4>
       </div>
-      <div *ngIf="subject.getValue().length > 0">
-        <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
+      <div *ngIf="subject.getValue() && subject.getValue().length > 0">
+        <mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
           <ng-container matColumnDef="value">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Value </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.value}} </mat-cell>

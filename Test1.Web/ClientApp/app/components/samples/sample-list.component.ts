@@ -7,6 +7,9 @@ import { DataSource } from '@angular/cdk/collections';
 import { Http } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 import {PageEvent} from '@angular/material';
 import {Sort} from '@angular/material';
 
@@ -20,13 +23,15 @@ export class SampleListComponent implements OnInit {
   @HostBinding('@routeAnimation') routeAnimation = true;
 
   dataSource: SampleDataSource = <SampleDataSource>{};
-  subject = new BehaviorSubject<MySampleDto[]>([]);
+  subject = new BehaviorSubject<MySampleDto[]>(undefined);
 
-  sort = '';
-  direction = '';
   pageSize = 5;
   pageIndex = 0;
   length = 0;
+  sort = '';
+  direction = '';
+  filter = '';
+  filterSubject= new Subject<string>();
 
   constructor(
     private _authService: AuthService,
@@ -37,6 +42,10 @@ export class SampleListComponent implements OnInit {
     private _authenticationService: AuthenticationService,
     private _changeDetectionRef: ChangeDetectorRef
   ) {
+    this.filterSubject
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .subscribe(filter => this.filterData(filter));
   }
 
   logout() {
@@ -52,9 +61,18 @@ export class SampleListComponent implements OnInit {
       });
   }
 
+  changeFilter(filter: string): void {
+    this.filterSubject.next(filter);
+  }
+
   changePage(pageEvent: PageEvent): void {
     this.pageSize = pageEvent.pageSize;
     this.pageIndex = pageEvent.pageIndex;
+    this.loadData();
+  }
+
+  filterData(filter: string): void {
+    this.filter = filter;
     this.loadData();
   }
 
@@ -70,7 +88,8 @@ export class SampleListComponent implements OnInit {
       this.pageSize,
       this.pageIndex,
       this.sort,
-      this.direction
+      this.direction,
+      this.filter
     )
       .subscribe(result => {
         this.length = result.length;
@@ -84,21 +103,21 @@ export class SampleListComponent implements OnInit {
   }
 
   deleteItem(sample: MySampleDto): void {
-      this.dialogService
-          .openConfirm({ message: 'Are you sure you want to delete this sample?' })
-          .afterClosed().subscribe((confirm: boolean) => {
-              if (confirm) {
-                  this.loadingService.register('samples');
-                  this.samplesService.deleteSample(sample.id)
-                      .subscribe(result => {
-                        this.loadData();
-                        this.loadingService.resolve('samples');
-                      }, error => {
-                        console.log('Error samplesService.deleteSample: ' + error);
-                        this.loadingService.resolve('samples');
-                      });
-              }
-          });
+    this.dialogService
+      .openConfirm({ message: 'Are you sure you want to delete this sample?' })
+      .afterClosed().subscribe((confirm: boolean) => {
+        if (confirm) {
+          this.loadingService.register('samples');
+          this.samplesService.deleteSample(sample.id)
+            .subscribe(result => {
+              this.loadData();
+              this.loadingService.resolve('samples');
+            }, error => {
+              console.log('Error samplesService.deleteSample: ' + error);
+              this.loadingService.resolve('samples');
+            });
+        }
+      });
   }
 
   ngOnInit(): void {
