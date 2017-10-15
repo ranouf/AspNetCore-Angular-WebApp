@@ -12,6 +12,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import {PageEvent} from '@angular/material';
 import {Sort} from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sample-list',
@@ -22,9 +23,11 @@ import {Sort} from '@angular/material';
 export class SampleListComponent implements OnInit {
   @HostBinding('@routeAnimation') routeAnimation = true;
 
+  columnKeys = ['value', 'creationTime', 'lastModificationTime', 'actions'];
   dataSource: SampleDataSource = <SampleDataSource>{};
   subject = new BehaviorSubject<MySampleDto[]>(undefined);
 
+  selectedRowIndex = '';
   pageSize = 5;
   pageIndex = 0;
   length = 0;
@@ -39,6 +42,7 @@ export class SampleListComponent implements OnInit {
     public media: TdMediaService,
     private dialogService: TdDialogService,
     private loadingService: TdLoadingService,
+    private router: Router,
     private _authenticationService: AuthenticationService,
     private _changeDetectionRef: ChangeDetectorRef
   ) {
@@ -59,6 +63,10 @@ export class SampleListComponent implements OnInit {
       }, error => {
         console.log('Error - AuthenticationService.Test');
       });
+  }
+
+  select(sample: MySampleDto) {
+    this.router.navigate(['/samples/view/' + sample.id]);
   }
 
   changeFilter(filter: string): void {

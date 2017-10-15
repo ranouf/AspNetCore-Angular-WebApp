@@ -1,7 +1,26 @@
 <mat-card tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
-  <mat-card-title>Sample edit</mat-card-title>
-  <mat-card-subtitle>You are on an authentified page</mat-card-subtitle>
-  <mat-divider></mat-divider>
-  <mat-card-content>
-  </mat-card-content>
+  <ng-template tdLoading="sample">
+    <form [formGroup]="sampleForm" (ngSubmit)="submit()" novalidate>
+      <mat-card-title>Sample edit</mat-card-title>
+      <mat-card-subtitle>You are on an authentified page</mat-card-subtitle>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <mat-form-field>
+          <input matInput
+                 formControlName="value"
+                 placeholder="Value">
+        </mat-form-field>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button type="submit"
+                mat-button
+                color="primary"
+                [disabled]="!sampleForm.valid">
+          SAVE
+        </button>
+        <button type="button" mat-button (click)="cancel()">CANCEL</button>
+      </mat-card-actions>
+    </form>
+  </ng-template>
 </mat-card>

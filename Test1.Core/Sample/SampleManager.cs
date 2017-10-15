@@ -1,9 +1,10 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Test1.Core.Common.Dependencies;
-using Test1.Core.Common.Repositories;
-using Test1.Core.Common.UnitOWork;
+using MyRepository = Test1.Core.Common.Repositories;
+using MyUnitOWork = Test1.Core.Common.UnitOWork;
 using Test1.Core.Sample.Entities;
 
 namespace Test1.Core.Sample
@@ -11,12 +12,12 @@ namespace Test1.Core.Sample
   public class SampleManager : IManager
   {
     private ISampleService _sampleService;
-    private IUnitOfWork _unitOfWork;
-    private IRepository<MySample> _sampleRepository;
+    private MyUnitOWork.IUnitOfWork _unitOfWork;
+    private MyRepository.IRepository<MySample> _sampleRepository;
 
     public SampleManager(
       ISampleService sampleService,
-      IUnitOfWork unitOfWork)
+      MyUnitOWork.IUnitOfWork unitOfWork)
     {
       _sampleService = sampleService;
       _unitOfWork = unitOfWork;
@@ -25,12 +26,14 @@ namespace Test1.Core.Sample
 
     public IQueryable<MySample> GetAllSamples()
     {
-      return _sampleRepository.GetAll();
+      return _sampleRepository.GetAll()
+        .Include(s => s.Author)
+        .Include(s => s.LastEditor);
     }
 
     public async Task<MySample> GetSampleByIdAsync(Guid id)
     {
-      var result = await _sampleRepository.FirstOrDefaultAsync(s => s.Id == id);
+      var result = await GetAllSamples().FirstOrDefaultAsync(s => s.Id == id);
       if (result == null)
       {
         throw new ArgumentException();
@@ -42,21 +45,21 @@ namespace Test1.Core.Sample
     public async Task<MySample> CreateAsync(MySample mySample)
     {
       var result = await _sampleRepository.InsertAsync(mySample);
-      _unitOfWork.SaveChanges();
+      await _unitOfWork.SaveChangesAsync();
       return result;
     }
 
     public async Task<MySample> UpdateAsync(MySample mySample)
     {
       var result = await _sampleRepository.UpdateAsync(mySample);
-      _unitOfWork.SaveChanges();
+      await _unitOfWork.SaveChangesAsync();
       return result;
     }
 
     public async Task DeleteAsync(MySample mySample)
     {
       await _sampleRepository.DeleteAsync(mySample);
-      _unitOfWork.SaveChanges();
+      await _unitOfWork.SaveChangesAsync();
     }
   }
 }

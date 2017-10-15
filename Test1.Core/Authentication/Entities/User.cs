@@ -10,10 +10,10 @@ namespace Test1.Core.Authentication.Entities
   public class User : IdentityUser<Guid>, IEntity
   {
     [Required]
-    public string Firstname { get; set; }
+    public string Firstname { get; private set; }
     [Required]
-    public string Lastname { get; set; }
-    public virtual ICollection<MySample> Samples { get; set; } = new List<MySample>();
+    public string Lastname { get; private set; }
+    public string Fullname => $"{Firstname} {Lastname}";
 
     internal User() { }
 

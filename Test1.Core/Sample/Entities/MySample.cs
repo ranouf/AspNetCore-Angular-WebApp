@@ -7,12 +7,17 @@ using Test1.Core.Common.Entities;
 
 namespace Test1.Core.Sample.Entities
 {
-  public class MySample : Entity
+  public class MySample : Entity, IAudited
   {
     [Required]
     public string Value { get; set; }
-    public Guid UserId { get; set; }
-    public virtual User User { get; set; } = new User();
+
+    public DateTimeOffset? CreationTime { get; set; }
+    public Guid AuthorId { get; set; }
+    public virtual User Author { get; set; }
+    public DateTimeOffset? LastModificationTime { get; set; }
+    public Guid? LastEditorId { get; set; }
+    public virtual User LastEditor { get; set; }
 
     internal MySample() { }
 

@@ -90,6 +90,7 @@ namespace Test1.Controllers.Samples
       {
         return BadRequest(ModelState);
       }
+
       var mySample = await _sampleManager.GetSampleByIdAsync(dto.Id);
       if (mySample == null)
       {

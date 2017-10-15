@@ -7,17 +7,27 @@
 @include mat-core();
 
 $primary: mat-palette($mat-orange, 800);
-$accent:  mat-palette($mat-light-blue, 600, A100, A400);
-
-$warn:    mat-palette($mat-red, 600);
-
+$accent: mat-palette($mat-light-blue, 600, A100, A400);
+$warn: mat-palette($mat-red, 600);
 $theme: mat-light-theme($primary, $accent, $warn);
+
+$hover: mat-color($mat-grey, 50);
+$active: mat-color($mat-grey, 100);
 
 @include angular-material-theme($theme);
 @include covalent-theme($theme);
 
-
 mat-progress-spinner {
   min-height: 100px;
   min-width: 100px;
+}
+
+.highlight:hover {
+  background: $hover;
+  cursor: pointer;
+}
+
+.highlight:active {
+  background: $active;
+  cursor: pointer;
 }
