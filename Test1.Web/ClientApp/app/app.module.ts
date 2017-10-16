@@ -14,6 +14,7 @@ import { AuthenticationService } from './services/api.services';
 import { AuthService } from './services/auth.service';
 import { DashboardModule } from './components/dashboard/dashboard.module';
 import { SamplesModule } from './components/samples/samples.module';
+import { ProfileModule } from './components/profile/profile.module';
 import { MATERIAL_COMPATIBILITY_MODE } from '@angular/material';
 
 import * as _fromAngularMaterial from '@angular/material';
@@ -30,6 +31,7 @@ import * as _fromCovalent from '@covalent/core';
 		_fromAngularMaterial.MatButtonModule,
 		_fromAngularMaterial.MatListModule,
 		_fromAngularMaterial.MatTooltipModule,
+		_fromAngularMaterial.MatMenuModule,
 		_fromCovalent.CovalentLayoutModule,
 		_fromCovalent.CovalentMediaModule,
 
@@ -38,6 +40,7 @@ import * as _fromCovalent from '@covalent/core';
 		AuthenticationModule,
 		DashboardModule,
 		SamplesModule,
+		ProfileModule,
 	],
 	declarations: [
 		AppComponent

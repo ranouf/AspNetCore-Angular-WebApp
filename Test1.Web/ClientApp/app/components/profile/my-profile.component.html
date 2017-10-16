@@ -1,0 +1,15 @@
+<form #myProfileForm="ngForm" (ngSubmit)="submit()">
+  <mat-card tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+    <mat-card-title>My profile</mat-card-title>
+    <mat-card-subtitle>You are on an authentified page</mat-card-subtitle>
+    <mat-divider></mat-divider>
+    <mat-card-content>      
+      <td-message label="Error!" [sublabel]="error.message" color="warn" icon="error" *ngIf="error"></td-message>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions>
+      <button type="submit" mat-button [disabled]="!(myProfileForm.valid)" color="primary">SAVE</button>
+      <button type="button" mat-button (click)="cancel()">CANCEL</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

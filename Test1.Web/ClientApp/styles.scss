@@ -31,3 +31,15 @@ mat-progress-spinner {
   background: $active;
   cursor: pointer;
 }
+
+.mat-table {
+  .mat-column-creationTime,
+  .mat-column-lastModificationTime {
+    flex: 0.1;
+    font-size:12px;
+  }
+
+  .mat-column-actions {
+    flex: 0 0 40px;
+  }
+}

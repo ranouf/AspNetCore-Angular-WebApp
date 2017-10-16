@@ -1,4 +1,4 @@
-<mat-card tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+<mat-card tdMediaToggle="gt-xs" [mediaClasses]="['push-sm','push-bottom-xxl']">
   <mat-card-title>Sample list</mat-card-title>
   <mat-card-subtitle>You are on an authentified page</mat-card-subtitle>
   <mat-divider></mat-divider>
@@ -24,11 +24,11 @@
           </ng-container>
           <ng-container matColumnDef="creationTime">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Created </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.creationTime | timeAgo}} </mat-cell>
+            <mat-cell *matCellDef="let row" class="mat-caption tc-grey-500"> {{row.creationTime | timeAgo}} </mat-cell>
           </ng-container>
           <ng-container matColumnDef="lastModificationTime">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Modified </mat-header-cell>
-            <mat-cell *matCellDef="let row">
+            <mat-cell *matCellDef="let row" class="mat-caption tc-grey-500">
               <span *ngIf="row.lastModificationTime">{{row.lastModificationTime | timeAgo}}</span>
             </mat-cell>
           </ng-container>
@@ -37,7 +37,8 @@
             <mat-cell *matCellDef="let row" [style.text-align]="'right'">
               <button mat-icon-button
                       x-position="before"
-                      [matMenuTriggerFor]="menu">
+                      [matMenuTriggerFor]="menu"
+                      onclick="event.preventDefault(); event.stopPropagation();">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
@@ -63,10 +64,6 @@
         </mat-paginator>
       </div>
     </ng-template>
-
-    <mat-divider></mat-divider>
-    <button type="button" mat-button color="primary" (click)="logout()">LOGOUT</button>
-    <button type="button" mat-button color="primary" (click)="test()">TEST</button>
   </mat-card-content>
 </mat-card>
 

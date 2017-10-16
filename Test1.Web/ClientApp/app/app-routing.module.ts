@@ -20,6 +20,11 @@ const appRoutes: Routes = [
     loadChildren: 'app/components/samples/samples.module#SamplesModule',
     canLoad: [AuthGuard]
   },
+  {
+	  path: 'profile',
+	  loadChildren: 'app/components/profile/profile.module#ProfileModule',
+	  canLoad: [AuthGuard]
+  },
 ];
 
 @NgModule({

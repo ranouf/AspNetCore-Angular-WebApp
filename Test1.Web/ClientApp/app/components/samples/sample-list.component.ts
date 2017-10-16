@@ -52,19 +52,6 @@ export class SampleListComponent implements OnInit {
       .subscribe(filter => this.filterData(filter));
   }
 
-  logout() {
-    this._authService.logout();
-  }
-
-  test() {
-    this._authenticationService.test()
-      .subscribe(result => {
-        // console.trace('Success - AuthenticationService.Test');
-      }, error => {
-        console.log('Error - AuthenticationService.Test');
-      });
-  }
-
   select(sample: MySampleDto) {
     this.router.navigate(['/samples/view/' + sample.id]);
   }

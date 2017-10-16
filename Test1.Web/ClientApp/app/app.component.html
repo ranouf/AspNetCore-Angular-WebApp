@@ -11,7 +11,26 @@
       </button>
       <span [routerLink]="['/']" class="cursor-pointer">Test1</span>
       <span flex></span>
-      <a mat-icon-button matTooltip="Login" [routerLink]="['/authentication/login']"><mat-icon>person</mat-icon></a>
+      <button mat-icon-button
+              x-position="before"
+              [matMenuTriggerFor]="menu">
+        <mat-icon>person</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <a [routerLink]="['/authentication/login']" mat-menu-item *ngIf="!isLoggedIn">
+          Login
+        </a>
+        <a [routerLink]="['/authentication/register']" mat-menu-item *ngIf="!isLoggedIn">
+          Register
+        </a>
+        <a [routerLink]="['/profile/my-profile']" mat-menu-item *ngIf="isLoggedIn">
+          My profile
+        </a>
+        <mat-divider *ngIf="isLoggedIn"></mat-divider>
+        <button (click)="logout()" mat-menu-item *ngIf="isLoggedIn">
+          Logout
+        </button>
+      </mat-menu>
     </div>
     <router-outlet></router-outlet>
   </td-layout-nav>
