@@ -28,7 +28,7 @@ namespace Test1.Core.Sample
     {
       return _sampleRepository.GetAll()
         .Include(s => s.Author)
-        .Include(s => s.LastEditor);
+        .Include(s => s.Editor);
     }
 
     public async Task<MySample> GetSampleByIdAsync(Guid id)

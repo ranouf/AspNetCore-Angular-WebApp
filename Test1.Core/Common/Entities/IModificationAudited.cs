@@ -10,7 +10,7 @@ namespace Test1.Core.Common.Entities
 
   public interface IModificationAudited<TPrimaryKey>
   {
-    DateTimeOffset? LastModificationTime { get; set; }
-    TPrimaryKey LastEditorId { get; set; }
+    DateTimeOffset? ModifiedAt { get; set; }
+    TPrimaryKey ModifiedByUserId { get; set; }
   }
 }

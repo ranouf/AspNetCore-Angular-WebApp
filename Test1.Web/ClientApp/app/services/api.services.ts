@@ -472,9 +472,11 @@ export interface MySampleDto {
     id: string;
     value: string;
     authorFullname?: string | undefined;
-    creationTime: Date;
-    lastEditorFullname?: string | undefined;
-    lastModificationTime?: Date | undefined;
+    createdAt: Date;
+    editorFullname?: string | undefined;
+    modifiedAt?: Date | undefined;
+    deleterFullname?: string | undefined;
+    deletedAt?: Date | undefined;
 }
 
 export interface PagedResultDtoOfMySampleDto {

@@ -12,8 +12,10 @@ namespace Test1.Web.Controllers.Samples.Dto
     [Required]
     public string Value { get; set; }
     public string AuthorFullname { get; set; }
-    public DateTimeOffset CreationTime { get; set; }
-    public string LastEditorFullname { get; set; }
-    public DateTimeOffset? LastModificationTime { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
+    public string EditorFullname { get; set; }
+    public DateTimeOffset? ModifiedAt { get; set; }
+    public string DeleterFullname { get; set; }
+    public DateTimeOffset? DeletedAt { get; set; }
   }
 }

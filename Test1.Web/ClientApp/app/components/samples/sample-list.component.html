@@ -24,12 +24,12 @@
           </ng-container>
           <ng-container matColumnDef="creationTime">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Created </mat-header-cell>
-            <mat-cell *matCellDef="let row" class="mat-caption tc-grey-500"> {{row.creationTime | timeAgo}} </mat-cell>
+            <mat-cell *matCellDef="let row" class="mat-caption tc-grey-500"> {{row.createdAt | timeAgo}} </mat-cell>
           </ng-container>
           <ng-container matColumnDef="lastModificationTime">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Modified </mat-header-cell>
             <mat-cell *matCellDef="let row" class="mat-caption tc-grey-500">
-              <span *ngIf="row.lastModificationTime">{{row.lastModificationTime | timeAgo}}</span>
+              <span *ngIf="row.modifiedAt">{{row.modifiedAt | timeAgo}}</span>
             </mat-cell>
           </ng-container>
           <ng-container matColumnDef="actions">

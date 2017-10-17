@@ -8,16 +8,16 @@ namespace Test1.Infrastructure.Migrations
   {
     protected override void Up(MigrationBuilder migrationBuilder)
     {
-      migrationBuilder.DropColumn(
-          name: "UserId",
-          table: "MySamples");
-
       migrationBuilder.DropForeignKey(
                 name: "FK_MySamples_AspNetUsers_UserId",
                 table: "MySamples");
 
       migrationBuilder.DropIndex(
           name: "IX_MySamples_UserId",
+          table: "MySamples");
+
+      migrationBuilder.DropColumn(
+          name: "UserId",
           table: "MySamples");
 
       migrationBuilder.AddColumn<Guid>(
@@ -31,10 +31,10 @@ namespace Test1.Infrastructure.Migrations
           name: "CreationTime",
           table: "MySamples",
           type: "datetimeoffset",
-          nullable: true);
+          nullable: false);
 
       migrationBuilder.AddColumn<Guid>(
-          name: "LastEditorId",
+          name: "LastUpdaterId",
           table: "MySamples",
           type: "uniqueidentifier",
           nullable: true);
@@ -51,9 +51,9 @@ namespace Test1.Infrastructure.Migrations
           column: "AuthorId");
 
       migrationBuilder.CreateIndex(
-          name: "IX_MySamples_LastEditorId",
+          name: "IX_MySamples_LastUpdaterId",
           table: "MySamples",
-          column: "LastEditorId");
+          column: "LastUpdaterId");
 
       migrationBuilder.AddForeignKey(
           name: "FK_MySamples_AspNetUsers_AuthorId",
@@ -64,9 +64,9 @@ namespace Test1.Infrastructure.Migrations
           onDelete: ReferentialAction.Cascade);
 
       migrationBuilder.AddForeignKey(
-          name: "FK_MySamples_AspNetUsers_LastEditorId",
+          name: "FK_MySamples_AspNetUsers_LastUpdaterId",
           table: "MySamples",
-          column: "LastEditorId",
+          column: "LastUpdaterId",
           principalTable: "AspNetUsers",
           principalColumn: "Id",
           onDelete: ReferentialAction.Restrict);
@@ -80,38 +80,6 @@ namespace Test1.Infrastructure.Migrations
           nullable: false,
           defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
-      migrationBuilder.DropForeignKey(
-          name: "FK_MySamples_AspNetUsers_AuthorId",
-          table: "MySamples");
-
-      migrationBuilder.DropForeignKey(
-          name: "FK_MySamples_AspNetUsers_LastEditorId",
-          table: "MySamples");
-
-      migrationBuilder.DropIndex(
-          name: "IX_MySamples_AuthorId",
-          table: "MySamples");
-
-      migrationBuilder.DropIndex(
-          name: "IX_MySamples_LastEditorId",
-          table: "MySamples");
-
-      migrationBuilder.DropColumn(
-          name: "AuthorId",
-          table: "MySamples");
-
-      migrationBuilder.DropColumn(
-          name: "CreationTime",
-          table: "MySamples");
-
-      migrationBuilder.DropColumn(
-          name: "LastEditorId",
-          table: "MySamples");
-
-      migrationBuilder.DropColumn(
-          name: "LastModificationTime",
-          table: "MySamples");
-
       migrationBuilder.CreateIndex(
           name: "IX_MySamples_UserId",
           table: "MySamples",
@@ -124,6 +92,38 @@ namespace Test1.Infrastructure.Migrations
           principalTable: "AspNetUsers",
           principalColumn: "Id",
           onDelete: ReferentialAction.Cascade);
+
+      migrationBuilder.DropForeignKey(
+          name: "FK_MySamples_AspNetUsers_AuthorId",
+          table: "MySamples");
+
+      migrationBuilder.DropForeignKey(
+          name: "FK_MySamples_AspNetUsers_LastUpdaterId",
+          table: "MySamples");
+
+      migrationBuilder.DropIndex(
+          name: "IX_MySamples_AuthorId",
+          table: "MySamples");
+
+      migrationBuilder.DropIndex(
+          name: "IX_MySamples_LastUpdaterId",
+          table: "MySamples");
+
+      migrationBuilder.DropColumn(
+          name: "AuthorId",
+          table: "MySamples");
+
+      migrationBuilder.DropColumn(
+          name: "CreationTime",
+          table: "MySamples");
+
+      migrationBuilder.DropColumn(
+          name: "LastUpdaterId",
+          table: "MySamples");
+
+      migrationBuilder.DropColumn(
+          name: "LastModificationTime",
+          table: "MySamples");
     }
   }
 }

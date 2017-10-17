@@ -24,6 +24,13 @@ namespace Test1.Infrastructure.EntityFramework
       Session = session;
     }
 
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+      builder.Entity<MySample>().HasQueryFilter(p => !p.IsDeleted);
+
+      base.OnModelCreating(builder);
+    }
+
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
     {
       var entries = ChangeTracker.Entries().ToList();
@@ -36,6 +43,17 @@ namespace Test1.Infrastructure.EntityFramework
             break;
           case EntityState.Modified:
             SetModificationAuditProperties(entry);
+            if (entry.Entity is ISoftDelete entity)
+            {
+              if (entity.IsDeleted)
+              {
+                SetDeletionAuditProperties(entry);
+              }
+            }
+            break;
+          case EntityState.Deleted:
+            CancelDeletionForSoftDelete(entry);
+            SetDeletionAuditProperties(entry);
             break;
         }
       }
@@ -47,14 +65,14 @@ namespace Test1.Infrastructure.EntityFramework
     {
       if (entry.Entity is ICreationAudited entity)
       {
-        if (entity.CreationTime == null)
+        if (entity.CreatedAt == null)
         {
-          entity.CreationTime = DateTime.Now;
+          entity.CreatedAt = DateTime.Now;
         }
 
         if (Session.UserId.HasValue)
         {
-          entity.AuthorId = Session.UserId.Value;
+          entity.CreatedByUserId = Session.UserId.Value;
         }
       }
     }
@@ -63,8 +81,33 @@ namespace Test1.Infrastructure.EntityFramework
     {
       if (entry.Entity is IModificationAudited entity)
       {
-        entity.LastModificationTime = DateTime.Now;
-        entity.LastEditorId = Session.UserId;
+        entity.ModifiedAt = DateTime.Now;
+        entity.ModifiedByUserId = Session.UserId;
+      }
+    }
+
+    protected virtual void CancelDeletionForSoftDelete(EntityEntry entry)
+    {
+      if (entry.Entity is ISoftDelete entity)
+      {
+        entry.State = EntityState.Unchanged;
+        entity.IsDeleted = true;
+      }
+    }
+
+    protected virtual void SetDeletionAuditProperties(EntityEntry entry)
+    {
+      if (entry.Entity is IDeletionAudited entity)
+      {
+        if (entity.DeletedAt == null)
+        {
+          entity.DeletedAt = DateTime.Now;
+        }
+
+        if (!entity.DeletedByUserId.HasValue)
+        {
+          entity.DeletedByUserId = Session.UserId;
+        }
       }
     }
   }

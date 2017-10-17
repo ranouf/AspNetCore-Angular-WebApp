@@ -11,8 +11,8 @@ using Test1.Infrastructure.EntityFramework;
 namespace Test1.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20171014045653_Add Audited")]
-    partial class AddAudited
+    [Migration("20171017191706_Add SoftDelete And Renaming")]
+    partial class AddSoftDeleteAndRenaming
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -188,22 +188,30 @@ namespace Test1.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("AuthorId");
+                    b.Property<DateTimeOffset>("CreatedAt");
 
-                    b.Property<DateTimeOffset>("CreationTime");
+                    b.Property<Guid>("CreatedByUserId");
 
-                    b.Property<Guid?>("LastUpdaterId");
+                    b.Property<DateTimeOffset?>("DeletedAt");
 
-                    b.Property<DateTimeOffset?>("LastModificationTime");
+                    b.Property<Guid?>("DeletedByUserId");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTimeOffset?>("ModifiedAt");
+
+                    b.Property<Guid?>("ModifiedByUserId");
 
                     b.Property<string>("Value")
                         .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex("CreatedByUserId");
 
-                    b.HasIndex("LastUpdaterId");
+                    b.HasIndex("DeletedByUserId");
+
+                    b.HasIndex("ModifiedByUserId");
 
                     b.ToTable("MySamples");
                 });
@@ -257,12 +265,16 @@ namespace Test1.Infrastructure.Migrations
                 {
                     b.HasOne("Test1.Core.Authentication.Entities.User", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorId")
+                        .HasForeignKey("CreatedByUserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Test1.Core.Authentication.Entities.User", "LastUpdater")
+                    b.HasOne("Test1.Core.Authentication.Entities.User", "Deleter")
                         .WithMany()
-                        .HasForeignKey("LastUpdaterId");
+                        .HasForeignKey("DeletedByUserId");
+
+                    b.HasOne("Test1.Core.Authentication.Entities.User", "Editor")
+                        .WithMany()
+                        .HasForeignKey("ModifiedByUserId");
                 });
 #pragma warning restore 612, 618
         }

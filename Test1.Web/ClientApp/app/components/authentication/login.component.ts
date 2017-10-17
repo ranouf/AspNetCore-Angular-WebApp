@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
 			.subscribe(result => {
 				// Get the redirect URL from our auth service
 				// If no redirect has been set, use the default-
-				let redirect = this._authService.redirectUrl ? this._authService.redirectUrl : '/samples';
+				let redirect = this._authService.redirectUrl ? this._authService.redirectUrl : '';
 
 				// Set our navigation extras object
 				// that passes on our global query params and fragment

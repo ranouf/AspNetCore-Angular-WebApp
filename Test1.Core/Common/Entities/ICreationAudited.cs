@@ -11,7 +11,7 @@ namespace Test1.Core.Common.Entities
 
   public interface ICreationAudited<TPrimaryKey>
   {
-    DateTimeOffset? CreationTime { get; set; }
-    TPrimaryKey AuthorId { get; set; }
+    DateTimeOffset CreatedAt { get; set; }
+    TPrimaryKey CreatedByUserId { get; set; }
   }
 }
